@@ -10,10 +10,10 @@ const name = 'gruenerator/hero-image-block';
 const settings = {
     apiVersion: 2,
     name: 'gruenerator/hero-image-block',
-    title: __('Hero Image Block', 'gruenerator'),
+    title: __('Titelbild', 'gruenerator'),
     category: 'gruenerator-category',
     icon: 'format-image',
-    description: __('Add a hero image section with title and subtitle', 'gruenerator'),
+    description: __('Füge ein großes Titelbild mit Überschrift und Untertitel hinzu', 'gruenerator'),
     attributes: {
         backgroundImageId: {
             type: 'integer',

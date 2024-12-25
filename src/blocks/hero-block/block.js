@@ -9,10 +9,10 @@ const name = 'gruenerator/hero-block';
 
 const settings = {
     apiVersion: 2,
-    title: __('Hero Block', 'gruenerator'),
+    title: __('Vorstellungsbereich', 'gruenerator'),
     icon: 'cover-image',
     category: 'gruenerator-category',
-    description: __('Add a hero section to your page', 'gruenerator'),
+    description: __('Füge einen Bereich hinzu, in dem du dich vorstellst', 'gruenerator'),
     attributes: {
         heroImageId: {
             type: 'number',
@@ -30,6 +30,14 @@ const settings = {
             type: 'string',
             default: __('Kandidat*in für den Wahlkreis 54 Musterstadt-Musterort.', 'gruenerator'),
         },
+        socialLinks: {
+            type: 'object',
+            default: {
+                facebook: '',
+                twitter: '',
+                youtube: ''
+            }
+        }
     },
     
     supports: {
@@ -39,6 +47,5 @@ const settings = {
     edit,
     save,
 };
-
 
 registerBlockType(name, settings);
