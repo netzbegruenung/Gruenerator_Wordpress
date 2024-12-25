@@ -170,8 +170,8 @@ function gruenerator_main_page() {
             <div class="gruenerator-footer">
                 <h3>Hilfe & Support</h3>
                 <p>
-                    Benötigst du Hilfe? Besuche unsere <a href="https://github.com/codeispoetry/sunflower" target="_blank">GitHub-Seite</a> 
-                    oder kontaktiere uns über das <a href="https://www.gruene.de/service" target="_blank">Grüne Serviceportal</a>.
+                    Benötigst du Hilfe? Besuche unsere <a href="https://github.com/netzbegruenung/Gruenerator_Wordpress" target="_blank">GitHub-Seite</a> 
+                    oder schreibe eine E-Mail an <a href="mailto:info@moritz-waechter.de">info@moritz-waechter.de</a>.
                 </p>
             </div>
         </div>
