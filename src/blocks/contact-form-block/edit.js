@@ -1,5 +1,5 @@
 import { __ } from '@wordpress/i18n';
-import { useBlockProps, RichText, InnerBlocks, MediaUpload, MediaUploadCheck } from '@wordpress/block-editor';
+import { useBlockProps, RichText, InnerBlocks, MediaUpload, MediaUploadCheck, InspectorControls } from '@wordpress/block-editor';
 import { Button, TextControl, Panel, PanelBody } from '@wordpress/components';
 import { useEffect } from '@wordpress/element';
 
@@ -47,6 +47,98 @@ const Edit = ({ attributes, setAttributes }) => {
 
     return (
         <div {...blockProps}>
+            <InspectorControls>
+                <PanelBody title={__('Hintergrundbild', 'gruenerator')} initialOpen={true}>
+                    <div style={{ marginBottom: '1rem' }}>
+                        <MediaUploadCheck>
+                            <MediaUpload
+                                onSelect={onSelectImage}
+                                allowedTypes={['image']}
+                                value={backgroundImageId}
+                                render={({ open }) => (
+                                    <div>
+                                        <img 
+                                            src={backgroundImageUrl || 'https://via.placeholder.com/1200x600'} 
+                                            alt={__('Hintergrundbild', 'gruenerator')}
+                                            style={{ 
+                                                width: '100%', 
+                                                height: '150px',
+                                                objectFit: 'cover',
+                                                marginBottom: '0.5rem',
+                                                borderRadius: '4px'
+                                            }}
+                                        />
+                                        <Button 
+                                            onClick={open}
+                                            variant="secondary"
+                                            isSecondary
+                                            style={{ width: '100%' }}
+                                        >
+                                            {backgroundImageUrl ? __('Hintergrundbild ändern', 'gruenerator') : __('Hintergrundbild auswählen', 'gruenerator')}
+                                        </Button>
+                                    </div>
+                                )}
+                            />
+                        </MediaUploadCheck>
+                    </div>
+                </PanelBody>
+
+                <PanelBody title={__('Kontakt Einstellungen', 'gruenerator')} initialOpen={true}>
+                    <TextControl
+                        label={__('E-Mail Adresse', 'gruenerator')}
+                        value={email || ''}
+                        onChange={(value) => setAttributes({ email: value })}
+                        type="email"
+                        help={__('Die E-Mail-Adresse für Kontaktanfragen', 'gruenerator')}
+                    />
+                </PanelBody>
+
+                <PanelBody title={__('Social Media Profile', 'gruenerator')} initialOpen={false}>
+                    {socialMedia && socialMedia.map((profile, index) => (
+                        <div key={index} style={{ 
+                            marginBottom: '1.5rem',
+                            padding: '1rem',
+                            backgroundColor: '#f0f0f0',
+                            borderRadius: '4px'
+                        }}>
+                            <h4 style={{ marginTop: 0 }}>{__('Profil', 'gruenerator')} {index + 1}</h4>
+                            <TextControl
+                                label={__('Plattform', 'gruenerator')}
+                                value={profile.platform || ''}
+                                onChange={(value) => updateSocialMedia(index, 'platform', value)}
+                                help={__('Name der Social Media Plattform', 'gruenerator')}
+                            />
+                            <TextControl
+                                label={__('URL', 'gruenerator')}
+                                value={profile.url || ''}
+                                onChange={(value) => updateSocialMedia(index, 'url', value)}
+                                help={__('Link zum Social Media Profil', 'gruenerator')}
+                            />
+                            <TextControl
+                                label={__('Icon-Klasse', 'gruenerator')}
+                                value={profile.icon || ''}
+                                onChange={(value) => updateSocialMedia(index, 'icon', value)}
+                                help={__('CSS-Klasse für das Icon (z.B. "facebook")', 'gruenerator')}
+                            />
+                            <Button
+                                isDestructive
+                                onClick={() => removeSocialMediaProfile(index)}
+                                style={{ marginTop: '0.5rem' }}
+                            >
+                                {__('Profil entfernen', 'gruenerator')}
+                            </Button>
+                        </div>
+                    ))}
+                    <Button
+                        variant="primary"
+                        onClick={addSocialMediaProfile}
+                        style={{ width: '100%' }}
+                    >
+                        {__('Social Media Profil hinzufügen', 'gruenerator')}
+                    </Button>
+                </PanelBody>
+            </InspectorControls>
+
             <div className="contact-form-block" style={{ backgroundImage: `url(${backgroundImageUrl})` }}>
                 <div className="contact-form-content">
                     <div className="contact-form-left">
@@ -57,47 +149,6 @@ const Edit = ({ attributes, setAttributes }) => {
                             onChange={(newTitle) => setAttributes({ title: newTitle })}
                             placeholder={__('Sag Hallo', 'gruenerator')}
                         />
-                        <TextControl
-                            label={__('E-Mail Adresse', 'gruenerator')}
-                            value={email}
-                            onChange={(value) => setAttributes({ email: value })}
-                            type="email"
-                        />
-                        <Panel>
-                            <PanelBody title={__('Social Media Profile', 'gruenerator')} initialOpen={false}>
-                                {socialMedia && socialMedia.map((profile, index) => (
-                                    <div key={index} className="social-media-profile">
-                                        <TextControl
-                                            label={__('Plattform', 'gruenerator')}
-                                            value={profile.platform}
-                                            onChange={(value) => updateSocialMedia(index, 'platform', value)}
-                                        />
-                                        <TextControl
-                                            label={__('URL', 'gruenerator')}
-                                            value={profile.url}
-                                            onChange={(value) => updateSocialMedia(index, 'url', value)}
-                                        />
-                                        <TextControl
-                                            label={__('Icon-Klasse', 'gruenerator')}
-                                            value={profile.icon}
-                                            onChange={(value) => updateSocialMedia(index, 'icon', value)}
-                                        />
-                                        <Button
-                                            isDestructive
-                                            onClick={() => removeSocialMediaProfile(index)}
-                                        >
-                                            {__('Entfernen', 'gruenerator')}
-                                        </Button>
-                                    </div>
-                                ))}
-                                <Button
-                                    isPrimary
-                                    onClick={addSocialMediaProfile}
-                                >
-                                    {__('Social Media Profil hinzufügen', 'gruenerator')}
-                                </Button>
-                            </PanelBody>
-                        </Panel>
                     </div>
                     <div className="contact-form-right">
                         <InnerBlocks
@@ -108,21 +159,6 @@ const Edit = ({ attributes, setAttributes }) => {
                     </div>
                 </div>
             </div>
-            <MediaUploadCheck>
-                <MediaUpload
-                    onSelect={onSelectImage}
-                    allowedTypes={['image']}
-                    value={backgroundImageId}
-                    render={({ open }) => (
-                        <Button 
-                            onClick={open}
-                            variant="secondary"
-                        >
-                            {backgroundImageUrl ? __('Hintergrundbild ändern', 'gruenerator') : __('Hintergrundbild wählen', 'gruenerator')}
-                        </Button>
-                    )}
-                />
-            </MediaUploadCheck>
         </div>
     );
 };
