@@ -35,6 +35,7 @@ require_once GRUENERATOR_PATH . 'includes/class-gruenerator-customizer.php';
 require_once GRUENERATOR_PATH . 'includes/class-gruenerator-blocks.php';
 require_once GRUENERATOR_PATH . 'includes/class-gruenerator-meta-fields.php';
 require_once GRUENERATOR_PATH . 'includes/class-gruenerator-social-media.php';
+require_once GRUENERATOR_PATH . 'includes/class-gruenerator-settings.php';
 
 // Lade Admin-spezifische Dateien
 require_once GRUENERATOR_PATH . 'admin/gruenerator-setup-wizard.php';
