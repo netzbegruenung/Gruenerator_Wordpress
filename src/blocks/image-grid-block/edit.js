@@ -4,7 +4,7 @@ import { PanelBody, TextControl, Button } from '@wordpress/components';
 import { MediaUpload, MediaUploadCheck } from '@wordpress/block-editor';
 
 const Edit = ({ attributes, setAttributes }) => {
-    const { items } = attributes;
+    const { items, sectionTitle } = attributes;
     const blockProps = useBlockProps();
 
     const updateItem = (index, property, value) => {
@@ -76,6 +76,13 @@ const Edit = ({ attributes, setAttributes }) => {
                     ))}
                 </PanelBody>
             </InspectorControls>
+            <RichText
+                tagName="h2"
+                className="section-title"
+                value={sectionTitle}
+                onChange={(value) => setAttributes({ sectionTitle: value })}
+                placeholder={__('Überschrift eingeben...', 'gruenerator')}
+            />
             <div className="image-grid">
                 {items.map((item, index) => (
                     <div key={index} className="grid-item">
