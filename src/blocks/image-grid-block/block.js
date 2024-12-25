@@ -9,10 +9,10 @@ const name = 'gruenerator/image-grid-block';
 
 const settings = {
     apiVersion: 2,
-    title: __('Image Grid Block', 'gruenerator'),
+    title: __('Link Kacheln', 'gruenerator'),
     category: 'gruenerator-category',
     icon: 'grid-view',
-    description: __('Add a grid of clickable images with text overlays', 'gruenerator'),
+    description: __('Füge ein Raster aus anklickbaren Bildern mit Text hinzu', 'gruenerator'),
     supports: {
         html: false,
         align: ['wide', 'full']

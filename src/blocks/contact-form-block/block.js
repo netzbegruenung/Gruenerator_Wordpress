@@ -11,10 +11,10 @@ const name = 'gruenerator/contact-form-block';
 
 const settings = {
     apiVersion: 2,
-    title: __('Contact Form Block', 'gruenerator'),
+    title: __('Kontaktformular', 'gruenerator'),
     category: 'gruenerator-category',
     icon: 'email',
-    description: __('Add a contact form section with background image, title, and social icons', 'gruenerator'),
+    description: __('Füge ein Kontaktformular mit Hintergrundbild, Titel und Social Media Icons hinzu', 'gruenerator'),
     attributes: {
         backgroundImageId: {
             type: 'number',

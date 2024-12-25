@@ -3,7 +3,7 @@ import { __ } from '@wordpress/i18n';
 import edit from './edit';
 import save from './save';
 import deprecated from './deprecated';
-import './editor.scss'; // Fügen Sie diese Zeile hinzu
+import './editor.scss';
 
 import './style.scss';
 
@@ -11,10 +11,10 @@ const name = 'gruenerator/link-tile-block';
 
 const settings = {
     apiVersion: 2,
-    title: __('Link Tile Block', 'gruenerator'),
+    title: __('Link-Kachel', 'gruenerator'),
     icon: 'admin-links',
     category: 'gruenerator-category',
-    description: __('Add a clickable tile with background image and title', 'gruenerator'),
+    description: __('Füge eine anklickbare Kachel mit Hintergrundbild und Titel hinzu', 'gruenerator'),
     attributes: {
         title: {
             type: 'string',
