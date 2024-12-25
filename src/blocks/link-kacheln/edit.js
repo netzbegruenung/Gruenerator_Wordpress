@@ -55,6 +55,7 @@ const Edit = ({ attributes, setAttributes }) => {
                 </PanelBody>
             </InspectorControls>
             <div {...blockProps}>
+                <h2 className="link-tile-section-title">{__('Aktuelle Themen', 'gruenerator')}</h2>
                 <div className="link-tile">
                     <div 
                         className="link-tile-background" 
