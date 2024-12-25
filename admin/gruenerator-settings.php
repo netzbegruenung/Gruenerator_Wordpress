@@ -5,9 +5,9 @@ if (!defined('ABSPATH')) {
 }
 
 /**
- * Zeigt Admin-Benachrichtigungen an
+ * Callback-Funktion für die Einstellungsseite
  */
-function gruenerator_settings_admin_notices() {
-    settings_errors('gruenerator_messages');
-}
-add_action('admin_notices', 'gruenerator_settings_admin_notices'); 
+function gruenerator_settings_page() {
+    $settings = Gruenerator_Settings::get_instance();
+    $settings->render_settings_page();
+} 

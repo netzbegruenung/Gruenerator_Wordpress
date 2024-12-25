@@ -470,6 +470,16 @@ function gruenerator_final_step() {
                 <li>Alle Einstellungen können später über das Grünerator-Dashboard angepasst werden</li>
             </ul>
         </div>
+
+        <table class="form-table">
+            <tr>
+                <th scope="row"><label for="gruenerator_set_as_frontpage">Als Startseite festlegen</label></th>
+                <td>
+                    <input type="checkbox" id="gruenerator_set_as_frontpage" name="gruenerator_set_as_frontpage" value="1">
+                    <p class="description">Aktiviere diese Option, um die erstellte Landingpage als Startseite deiner Website festzulegen.</p>
+                </td>
+            </tr>
+        </table>
     </div>
     <?php
 }
@@ -512,138 +522,3 @@ function gruenerator_setup_complete_page() {
 }
 
 add_action('admin_post_gruenerator_process_setup', 'gruenerator_process_setup');
-
-/**
- * Einstellungsseite des Grünerators
- */
-function gruenerator_settings_page() {
-    if (!current_user_can('manage_options')) {
-        wp_die('Unzureichende Berechtigungen');
-    }
-    ?>
-    <div class="wrap">
-        <h1>Grünerator Einstellungen</h1>
-        
-        <div class="gruenerator-settings-section">
-            <h2>Zurücksetzen</h2>
-            <p>Hier kannst du alle Einstellungen des Grünerators auf die Standardwerte zurücksetzen.</p>
-            
-            <div class="gruenerator-settings-card">
-                <h3>Alle Einstellungen zurücksetzen</h3>
-                <p>Diese Aktion setzt alle Einstellungen des Grünerators auf die Standardwerte zurück. Dies betrifft:</p>
-                <ul>
-                    <li>Design-Einstellungen</li>
-                    <li>Social Media Verknüpfungen</li>
-                    <li>Hero-Bereich</li>
-                    <li>Über mich</li>
-                    <li>Hauptthema</li>
-                    <li>Politische Schwerpunkte</li>
-                    <li>Aktionsbereich</li>
-                    <li>Kontaktbereich</li>
-                </ul>
-                <p class="description" style="color: #d63638;">Achtung: Diese Aktion kann nicht rückgängig gemacht werden!</p>
-                
-                <form method="post" action="<?php echo esc_url(admin_url('admin-post.php')); ?>" onsubmit="return confirm('Bist du sicher, dass du alle Einstellungen zurücksetzen möchtest? Diese Aktion kann nicht rückgängig gemacht werden!');">
-                    <?php wp_nonce_field('gruenerator_reset_settings_nonce'); ?>
-                    <input type="hidden" name="action" value="gruenerator_reset_settings">
-                    <input type="submit" class="button button-secondary" value="Alle Einstellungen zurücksetzen">
-                </form>
-            </div>
-        </div>
-        
-        <style>
-            .gruenerator-settings-section {
-                margin: 2rem 0;
-                max-width: 800px;
-            }
-            .gruenerator-settings-card {
-                background: white;
-                border: 1px solid #ccd0d4;
-                border-radius: 4px;
-                padding: 1.5rem;
-                margin: 1rem 0;
-            }
-            .gruenerator-settings-card h3 {
-                margin-top: 0;
-            }
-            .gruenerator-settings-card ul {
-                list-style: disc;
-                margin-left: 1.5rem;
-            }
-            .gruenerator-settings-card .button {
-                margin-top: 1rem;
-            }
-        </style>
-    </div>
-    <?php
-}
-
-add_action('admin_post_gruenerator_reset_settings', 'gruenerator_reset_settings');
-
-/**
- * Verarbeitet das Zurücksetzen der Einstellungen
- */
-function gruenerator_reset_settings() {
-    if (!current_user_can('manage_options')) {
-        wp_die('Unzureichende Berechtigungen');
-    }
-
-    if (!isset($_POST['_wpnonce']) || !wp_verify_nonce($_POST['_wpnonce'], 'gruenerator_reset_settings_nonce')) {
-        wp_die('Sicherheitsüberprüfung fehlgeschlagen');
-    }
-
-    // Liste aller Optionen, die zurückgesetzt werden sollen
-    $options_to_reset = array(
-        'gruenerator_use_css',
-        'gruenerator_social_facebook',
-        'gruenerator_social_twitter',
-        'gruenerator_social_instagram',
-        'gruenerator_hero_image',
-        'gruenerator_hero_heading',
-        'gruenerator_hero_text',
-        'gruenerator_about_me_title',
-        'gruenerator_about_me_content',
-        'gruenerator_hero_image_block_image',
-        'gruenerator_hero_image_title',
-        'gruenerator_hero_image_subtitle',
-    );
-
-    // Füge die Themen-Optionen hinzu
-    for ($i = 1; $i <= 3; $i++) {
-        $options_to_reset[] = 'gruenerator_theme_image_' . $i;
-        $options_to_reset[] = 'gruenerator_theme_title_' . $i;
-        $options_to_reset[] = 'gruenerator_theme_content_' . $i;
-    }
-
-    // Füge die Aktions-Optionen hinzu
-    for ($i = 1; $i <= 3; $i++) {
-        $options_to_reset[] = 'gruenerator_action_image_' . $i;
-        $options_to_reset[] = 'gruenerator_action_text_' . $i;
-        $options_to_reset[] = 'gruenerator_action_link_' . $i;
-    }
-
-    // Füge die Kontaktformular-Optionen hinzu
-    $options_to_reset[] = 'gruenerator_contact_form_title';
-    $options_to_reset[] = 'gruenerator_contact_form_image';
-    $options_to_reset[] = 'gruenerator_contact_form_email';
-
-    // Lösche alle Optionen
-    foreach ($options_to_reset as $option) {
-        delete_option($option);
-    }
-
-    // Setze eine Erfolgsmeldung
-    add_settings_error(
-        'gruenerator_messages',
-        'gruenerator_reset_success',
-        'Alle Einstellungen wurden erfolgreich zurückgesetzt.',
-        'success'
-    );
-
-    // Leite zurück zur Einstellungsseite
-    wp_safe_redirect(add_query_arg(
-        array('page' => 'gruenerator-settings', 'settings-updated' => 'true'),
-        admin_url('admin.php')
-    ));
-    exit;
-}
