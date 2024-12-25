@@ -141,21 +141,43 @@ const Edit = ({ attributes, setAttributes }) => {
 
             <div className="contact-form-block" style={{ backgroundImage: `url(${backgroundImageUrl})` }}>
                 <div className="contact-form-content">
-                    <div className="contact-form-left">
-                        <RichText
-                            tagName="h2"
-                            className="contact-form-title"
-                            value={title}
-                            onChange={(newTitle) => setAttributes({ title: newTitle })}
-                            placeholder={__('Sag Hallo', 'gruenerator')}
-                        />
-                    </div>
-                    <div className="contact-form-right">
-                        <InnerBlocks
-                            allowedBlocks={ALLOWED_BLOCKS}
-                            template={TEMPLATE}
-                            templateLock="all"
-                        />
+                    <RichText
+                        tagName="h2"
+                        className="contact-form-title"
+                        value={title}
+                        onChange={(newTitle) => setAttributes({ title: newTitle })}
+                        placeholder={__('Sag Hallo', 'gruenerator')}
+                    />
+                    <div className="contact-form-main">
+                        <div className="contact-form-left">
+                            <h3 className="contact-links-title">{__('Kontaktmöglichkeiten', 'gruenerator')}</h3>
+                            {email && (
+                                <div className="contact-info">
+                                    <div className="contact-item">
+                                        <i className="fas fa-envelope"></i>
+                                        <a href={`mailto:${email}`}>{email}</a>
+                                    </div>
+                                </div>
+                            )}
+                            {socialMedia && socialMedia.length > 0 && (
+                                <div className="social-icons">
+                                    {socialMedia.map((profile, index) => (
+                                        profile.url && profile.icon && (
+                                            <a key={index} href={profile.url} target="_blank" rel="noopener noreferrer">
+                                                <i className={`fab fa-${profile.icon}`}></i>
+                                            </a>
+                                        )
+                                    ))}
+                                </div>
+                            )}
+                        </div>
+                        <div className="contact-form-right">
+                            <InnerBlocks
+                                allowedBlocks={ALLOWED_BLOCKS}
+                                template={TEMPLATE}
+                                templateLock="all"
+                            />
+                        </div>
                     </div>
                 </div>
             </div>

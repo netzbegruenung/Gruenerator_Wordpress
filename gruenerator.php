@@ -391,9 +391,25 @@ function gruenerator_modify_contact_form_output($block_content, $block) {
 add_filter('render_block', 'gruenerator_modify_contact_form_output', 10, 2);
 
 function gruenerator_enqueue_admin_scripts($hook) {
-    if (strpos($hook, 'gruenerator') !== false) {
+    // Lade Media-Scripts auf allen Admin-Seiten, die sie benötigen könnten
+    if (strpos($hook, 'gruenerator') !== false || 
+        $hook == 'post.php' || 
+        $hook == 'post-new.php' || 
+        $hook == 'page.php' || 
+        $hook == 'page-new.php') {
         wp_enqueue_media();
-        wp_enqueue_script('gruenerator-admin-js', plugin_dir_url(__FILE__) . 'gruenerator-admin.js', array('jquery'), '1.0.0', true);
+        wp_enqueue_script('jquery');
+        wp_enqueue_script('gruenerator-admin-js', GRUENERATOR_URL . 'admin/js/gruenerator-admin.js', array('jquery'), '1.0.0', true);
+        
+        // Lade das Setup-Wizard-Skript nur auf der Setup-Wizard-Seite
+        if (strpos($hook, 'gruenerator-setup-wizard') !== false) {
+            wp_enqueue_script('gruenerator-setup-wizard-js', 
+                plugin_dir_url(__FILE__) . 'admin/js/setup-wizard-script.js', 
+                array('jquery', 'wp-media-upload'), 
+                '1.0.0', 
+                true
+            );
+        }
     }
 }
 add_action('admin_enqueue_scripts', 'gruenerator_enqueue_admin_scripts');

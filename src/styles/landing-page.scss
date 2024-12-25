@@ -8,7 +8,7 @@
 
 .styled-layout {
     .wp-block-group {
-        padding: 0px !important ;
+        padding: 0px !important;
 
         &.wp-block-group-is-layout-flow > h2,
         .wp-block-group__inner-container > h2 {
@@ -24,6 +24,7 @@
         @include sunflower-container;
     }
 }
+
 // Ausblenden des Eintrag-Titels
 .entry-title {
     display: none;
@@ -32,6 +33,7 @@
     padding: 0;
     overflow: hidden;
 }
+
 // Ausblenden des Eintrag-Headers
 body.page .entry-header {
     height: 0;
@@ -39,103 +41,4 @@ body.page .entry-header {
     padding: 0;
     padding-bottom: 0 !important;
     overflow: hidden;
-}
-
-.link-tiles-section {
-    margin-top: 4rem;
-    margin-bottom: 4rem;
-
-    h2 {
-        text-align: center;
-        margin-bottom: 2rem;
-        font-size: 2.5rem;
-        color: custom-color('tanne');
-    }
-
-    .wp-block-gruenerator-link-tile-block {
-        display: flex;
-        justify-content: space-between;
-        flex-wrap: wrap;
-        gap: 2rem;
-
-        .link-tile {
-            flex: 1 1 calc(50% - 1rem);
-            min-width: 250px;
-            transition: transform 0.3s ease;
-
-            &:hover {
-                transform: translateY(-5px);
-            }
-        }
-    }
-}
-/* Styling for the contact form container */
-.wp-block-group.contact-section {
-    display: flex;
-    justify-content: flex-end; /* Aligns form to the right */
-    padding: 20px;
-}
-
-/* Styling for the form itself */
-#sunflower-contact-form {
-    background: white;
-    border-radius: 15px;
-    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
-    padding: 30px;
-    width: 100%;
-}
-
-/* Form field styling */
-#sunflower-contact-form input,
-#sunflower-contact-form textarea {
-    background-color: custom-color('sand');
-    border: 0px ;
-  
-}
-
-/* Button styling */
-#sunflower-contact-form input[type="submit"] {
-    background-color: custom-color('tanne'); /* Grüne Farbe */
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    font-size: 16px;
-    border-radius: 5px;
-    cursor: pointer;
-    width: 100%;
-}
-
-#sunflower-contact-form input[type="submit"]:hover {
-    background-color: #00391c; /* Darker green on hover */
-}
-
-/* Adjusting text styling */
-.contact-section p,
-#sunflower-contact-form label {
-    padding-bottom: 10px;
-    font-family: Arial, sans-serif;
-    color: #333;
-    font-size: 14px;
-}
-
-/* Adjust the title style */
-#contact-form-title {
-    display: none;
- 
-}
-
-/* Additional spacing for better layout */
-#sunflower-contact-form .comment-form-comment {
-    margin-bottom: 20px;
-}
-.wp-block-sunflower-contact-form-wrapper {
-    background-size: cover;
-    background-position: center;
-    padding: 2rem;
-}
-
-.wp-block-sunflower-contact-form-title {
-    color: #ffffff;
-    text-align: center;
-    margin-bottom: 2rem;
 }
