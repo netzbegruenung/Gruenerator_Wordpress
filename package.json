@@ -1,16 +1,25 @@
 {
-  "name": "sunflower-gutenberg-addon",
+  "name": "gruenerator-wordpress",
   "version": "1.0.0",
+  "description": "Ein WordPress-Plugin für professionelle Kandidatenseiten der Grünen",
   "main": "webpack.config.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "wp-scripts build",
     "start": "wp-scripts start"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "description": "",
+  "keywords": [
+    "wordpress",
+    "gutenberg",
+    "gruene",
+    "politik",
+    "kandidaten"
+  ],
+  "author": {
+    "name": "Moritz Wächter",
+    "url": "https://github.com/netzbegruenung"
+  },
+  "license": "GPL-2.0-or-later",
   "devDependencies": {
     "@babel/core": "^7.25.2",
     "@babel/plugin-transform-class-properties": "^7.25.4",

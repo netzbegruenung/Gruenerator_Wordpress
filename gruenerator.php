@@ -5,19 +5,21 @@
  * @version 1.0.0
  * 
  * @wordpress-plugin
- * Plugin Name: Gruenerator Gutenberg Addon
- * Description: Fügt spezielle Gutenberg-Blöcke hinzu, die nur mit einem spezifischen Theme funktionieren. Erstellt eine Seite mit vorgefertigten Blöcken auf Knopfdruck.
+ * Plugin Name: Grünerator WordPress
+ * Description: Erstelle professionelle Kandidatenseiten für grüne Kandidierende mit speziellen Gutenberg-Blöcken. Dieses Plugin wurde speziell für das Sunflower WordPress-Theme entwickelt und erfordert dessen Installation.
  * Version: 1.0.0
- * Author: Dein Name
+ * Author: Moritz Wächter
  * License: GPL v2 oder später
  * License URI: http://www.gnu.org/licenses/gpl-2.0.html
  * Text Domain: gruenerator
  * Domain Path: /languages
  * Requires at least: 5.8
  * Requires PHP: 7.4
+ * Requires Plugins: 
+ * Requires Themes: sunflower
  *
- * Dieses Plugin ist ein Gutenberg-Addon speziell für grüne Websites.
- * Es erweitert WordPress um spezielle Blöcke und Funktionen.
+ * Dieses Plugin ist eine Erweiterung für das Sunflower-Theme und fügt spezielle
+ * Gutenberg-Blöcke und Funktionen hinzu, die auf das Theme abgestimmt sind.
  *
  * @since 1.0.0
  */
