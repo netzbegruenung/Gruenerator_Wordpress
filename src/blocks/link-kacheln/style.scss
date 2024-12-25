@@ -4,6 +4,13 @@
     margin-top: 2rem;
     margin-bottom: 2rem;
 
+    .link-tile-section-title {
+        color: custom-color('tanne');
+        font-size: $font-size-base * 1.5;
+        margin-bottom: 1.5rem;
+        text-align: left;
+    }
+
     .link-tile {
         position: relative;
         background-size: cover;
@@ -14,6 +21,13 @@
         height: 375px;
         display: block;
         color: #fff;
+        flex: 1 1 calc(50% - 1rem);
+        min-width: 250px;
+        transition: transform 0.3s ease;
+
+        &:hover {
+            transform: translateY(-5px);
+        }
     }
 
     .link-tile-link {

@@ -44,26 +44,41 @@
         margin: 0 auto;
         padding: 2rem;
         display: flex;
-        flex-wrap: wrap;
-        gap: 2rem;
-    }
-
-    .contact-form-left {
-        flex: 1;
-        min-width: 300px;
-        max-width: 400px;
-    }
-
-    .contact-form-right {
-        flex: 2;
-        min-width: 300px;
+        flex-direction: column;
+        align-items: center;
     }
 
     .contact-form-title {
         color: white;
         font-size: $font-size-base * 2.5;
-        margin-bottom: 1.5rem;
-        text-align: left;
+        margin-bottom: 2rem;
+        text-align: center;
+        width: 100%;
+    }
+
+    .contact-form-main {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 2rem;
+        width: 100%;
+    }
+
+    .contact-form-left {
+        flex: 1;
+        min-width: 300px;
+
+        .contact-links-title {
+            color: white;
+            font-size: $font-size-base * 1.5;
+            margin-bottom: 1.5rem;
+            text-align: left;
+        }
+    }
+
+    .contact-form-right {
+        flex: 2;
+        min-width: 300px;
+        max-width: 800px;
     }
 
     .contact-info {
@@ -126,10 +141,10 @@
         input[type="email"],
         textarea {
             width: 100%;
-            padding: 0.75rem;
             margin-bottom: 1rem;
             border: 1px solid rgba(0, 0, 0, 0.1);
             border-radius: 4px;
+            background-color: custom-color('sand');
             
             &:focus {
                 outline: none;
@@ -147,18 +162,48 @@
             border-radius: 4px;
             cursor: pointer;
             transition: background-color 0.3s ease;
+            width: 100%;
             
             &:hover {
-                background-color: custom-color('klee');
+                background-color: darken(custom-color('tanne'), 10%);
             }
         }
     }
+
+    // Kontaktformular-spezifische Styles
+    .contact-section {
+        display: flex;
+        justify-content: flex-end;
+        padding: 20px;
+    }
+
+    #sunflower-contact-form {
+        label {
+            padding-bottom: 10px;
+            font-family: Arial, sans-serif;
+            color: #333;
+            font-size: 14px;
+        }
+
+        .comment-form-comment {
+            margin-bottom: 20px;
+        }
+    }
+
+    #contact-form-title {
+        display: none;
+    }
+}
+
+.comment-respond {
+    padding: 0 !important;
+    background-color: transparent !important;
 }
 
 // Responsive Anpassungen
 @media (max-width: 768px) {
     .wp-block-gruenerator-contact-form-block {
-        .contact-form-content {
+        .contact-form-main {
             flex-direction: column;
         }
 
@@ -168,7 +213,6 @@
         }
 
         .contact-form-title {
-            text-align: center;
             font-size: $font-size-base * 2;
         }
 
