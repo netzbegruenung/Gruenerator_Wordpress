@@ -1,0 +1,87 @@
+//theme-bridge.scss
+
+// Sunflower Theme Variablen
+$custom-colors: (
+    klee: #008939,
+    klee-700: #006e2e,
+    tanne: #005437,
+    sonne: #fff17a,
+    sand: #f5f1e9,
+    grashalm: #8abd24,
+    himmel: #0ba1dd,
+    black: #000,
+    black-500: #201d1b,
+    gray: #eff2ed,
+    gray-500: #6b7a80,
+    white: #fff
+);
+
+$primary: map-get($custom-colors, "tanne");
+$secondary: map-get($custom-colors, "klee");
+$white: map-get($custom-colors, "white");
+$black: map-get($custom-colors, "black");
+$black-500: map-get($custom-colors, "black-500");
+$white-90: rgba(255, 255, 255, 0.9);
+$dark: #ddd;
+$gray-500: map-get($custom-colors, "gray-500");
+$darkgray: #333;
+$lightgray: #aeb2ad;
+$very-light-gray: #d6d9d6;
+$body-color: #212529;
+$sidebar-color: #afafaf;
+$lightgreen: #e5f3eb;
+$darkgreen: #002216;
+$border-radius: 3px;
+$border-radius-small: 1px;
+$container-max-widths: (
+    sm: 540px,
+    md: 720px,
+    lg: 960px,
+    xl: 1170px
+);
+$font-size-base: 1.1875rem;
+$small-font-size: 15px;
+$primary-text-emphasis: $white;
+$accordion-button-color: #fff;
+$accordion-button-active-color: #fff;
+$accordion-icon-active-color: #fff;
+$accordion-icon-color: #fff;
+$accordion-button-active-bg: $secondary;
+$accordion-button-bg: #008939;
+$accordion-border-radius: 6px;
+$link-decoration: none;
+$link-hover-decoration: underline;
+
+// Funktion zum einfachen Zugriff auf benutzerdefinierte Farben
+@function custom-color($color-name) {
+    @return map-get($custom-colors, $color-name);
+}
+
+// Mixins für häufig verwendete Stile
+@mixin sunflower-button {
+    background-color: $primary;
+    color: $white;
+    border-radius: $border-radius;
+    text-decoration: $link-decoration;
+    
+    &:hover {
+        background-color: darken($primary, 10%);
+        text-decoration: $link-hover-decoration;
+    }
+}
+
+@mixin sunflower-container {
+    @each $breakpoint, $container-max-width in $container-max-widths {
+        @media (min-width: $container-max-width) {
+            max-width: $container-max-width;
+        }
+    }
+}
+
+// Exportiere Variablen für JavaScript-Verwendung
+:export {
+    primary: $primary;
+    secondary: $secondary;
+    borderRadius: $border-radius;
+    fontSize: $font-size-base;
+}

@@ -1,0 +1,22 @@
+.wp-block-gruenerator-image-grid-block {
+    .block-editor-rich-text__editable {
+        background-color: rgba(255, 255, 255, 0.8);
+        padding: 0.25rem;
+        border-radius: 4px;
+    }
+
+    .components-button {
+        margin-top: 0.5rem;
+    }
+}
+
+// Anpassungen für den Inspektor-Bereich
+.components-panel__body {
+    .components-base-control {
+        margin-bottom: 1rem;
+    }
+
+    .components-text-control__input {
+        width: 100%;
+    }
+}

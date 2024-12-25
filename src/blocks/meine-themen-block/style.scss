@@ -1,0 +1,80 @@
+@import '../../styles/theme-bridge';
+
+.wp-block-gruenerator-meine-themen-block {
+    position: relative;
+    padding: 3rem 0; // Fügt Abstand oben und unten hinzu
+
+    &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 50%;
+        right: 50%;
+        bottom: 0;
+        margin-left: -50vw;
+        margin-right: -50vw;
+        background-color: custom-color('sand');
+        z-index: -1;
+    }
+
+    .meine-themen-content {
+        background-color: white;
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        padding: 2rem;
+        margin: 2rem auto;
+        max-width: 1170px;
+    }
+
+    .meine-themen-header-image {
+        width: 100%;
+        height: auto;
+        margin-bottom: 2rem;
+    }
+
+    .meine-themen-title {
+        color: $primary;
+        font-size: $font-size-base * 2.5;
+        font-weight: bold;
+        text-align: center;
+        margin-bottom: 2rem;
+        font-family: 'GrueneType', sans-serif;
+    }
+
+    .meine-themen-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 2rem;
+    }
+
+    .theme-card {
+        background-color: white;
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        padding: 0; // Entfernen Sie das Padding hier
+    }
+
+    .theme-image {
+        width: 100%;
+        height: auto;
+        display: block; // Verhindert unerwünschte Abstände unter dem Bild
+        border-radius: 8px 8px 0 0; // Runde Ecken nur oben
+    }
+
+    .theme-title {
+        color: $primary;
+        font-size: $font-size-base * 1.5;
+        font-weight: bold;
+        margin: 1rem 1rem 0.5rem; // Fügen Sie Innenabstände hinzu
+        font-family: 'GrueneType', sans-serif;
+    }
+
+    .theme-content {
+        color: $body-color;
+        font-size: $font-size-base;
+        line-height: 1.6;
+        padding: 0 1rem 1rem; // Fügen Sie Innenabstände hinzu
+    }
+}

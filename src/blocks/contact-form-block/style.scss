@@ -1,0 +1,179 @@
+@import '../../styles/theme-bridge';
+
+.wp-block-gruenerator-contact-form-block {
+    position: relative;
+    width: 100vw;
+    margin-left: calc(50% - 50vw);
+    margin-right: calc(50% - 50vw);
+    padding-left: 0;
+    padding-right: 0;
+    max-width: 100vw;
+    
+    &.alignfull {
+        width: 100vw;
+        margin-left: calc(50% - 50vw);
+        margin-right: calc(50% - 50vw);
+        padding-left: 0;
+        padding-right: 0;
+        max-width: 100vw;
+    }
+    
+    .contact-form-block {
+        background-size: cover;
+        background-position: center;
+        padding: 4rem 0;
+        width: 100%;
+        position: relative;
+        
+        &::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.4);
+            z-index: 1;
+        }
+    }
+
+    .contact-form-content {
+        position: relative;
+        z-index: 2;
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 2rem;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 2rem;
+    }
+
+    .contact-form-left {
+        flex: 1;
+        min-width: 300px;
+        max-width: 400px;
+    }
+
+    .contact-form-right {
+        flex: 2;
+        min-width: 300px;
+    }
+
+    .contact-form-title {
+        color: white;
+        font-size: $font-size-base * 2.5;
+        margin-bottom: 1.5rem;
+        text-align: left;
+    }
+
+    .contact-info {
+        margin-bottom: 1.5rem;
+        
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.5rem;
+            color: white;
+
+            a {
+                color: white;
+                text-decoration: none;
+                
+                &:hover {
+                    text-decoration: underline;
+                }
+            }
+
+            i {
+                width: 20px;
+                text-align: center;
+            }
+        }
+    }
+
+    .social-icons {
+        display: flex;
+        gap: 1rem;
+        margin-bottom: 1.5rem;
+
+        a {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: custom-color('tanne');
+            color: white;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+            
+            &:hover {
+                background-color: custom-color('klee');
+                transform: translateY(-2px);
+            }
+        }
+    }
+
+    // Formular-Styles
+    form {
+        background: rgba(255, 255, 255, 0.95);
+        padding: 2rem;
+        border-radius: 8px;
+        
+        input[type="text"],
+        input[type="email"],
+        textarea {
+            width: 100%;
+            padding: 0.75rem;
+            margin-bottom: 1rem;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            border-radius: 4px;
+            
+            &:focus {
+                outline: none;
+                border-color: custom-color('tanne');
+                box-shadow: 0 0 0 2px rgba(custom-color('tanne'), 0.1);
+            }
+        }
+
+        button,
+        input[type="submit"] {
+            background-color: custom-color('tanne');
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            
+            &:hover {
+                background-color: custom-color('klee');
+            }
+        }
+    }
+}
+
+// Responsive Anpassungen
+@media (max-width: 768px) {
+    .wp-block-gruenerator-contact-form-block {
+        .contact-form-content {
+            flex-direction: column;
+        }
+
+        .contact-form-left,
+        .contact-form-right {
+            max-width: 100%;
+        }
+
+        .contact-form-title {
+            text-align: center;
+            font-size: $font-size-base * 2;
+        }
+
+        .social-icons {
+            justify-content: center;
+        }
+    }
+}

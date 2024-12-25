@@ -1,0 +1,42 @@
+# WordPress Plugin spezifische Ignorierungen
+.DS_Store
+node_modules/
+build/
+dist/
+
+# Entwicklungsumgebung
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Temporäre Dateien
+*.log
+*.tmp
+*.temp
+.cache/
+
+# Composer
+vendor/
+composer.lock
+
+# NPM/Yarn
+package-lock.json
+yarn.lock
+.yarn-integrity
+
+# Verschiedenes
+*.zip
+*.tar.gz
+*.tar
+.env
+.env.*
+!.env.example
+
+# WordPress spezifisch
+wp-config.php
+wp-content/uploads/
+wp-content/upgrade/
+wp-content/backup-db/
+wp-content/cache/
+wp-content/backups/ 

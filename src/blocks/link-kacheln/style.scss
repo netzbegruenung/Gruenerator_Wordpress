@@ -1,0 +1,95 @@
+@import '../../styles/theme-bridge';
+
+.wp-block-gruenerator-link-tile-block {
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+
+    .link-tile {
+        position: relative;
+        background-size: cover;
+        background-position: center;
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        height: 375px;
+        display: block;
+        color: #fff;
+    }
+
+    .link-tile-link {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 3;
+        text-decoration: none;
+    }
+
+    .link-tile-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(to bottom, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.6));
+        z-index: 1;
+    }
+
+    .link-tile-content {
+        position: absolute;
+        bottom: 10px;
+        left: 0;
+        right: 0;
+        padding: 1.5rem 2rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        z-index: 2;
+    }
+
+    .link-tile-title {
+        font-size: 2.5rem !important;
+        margin: 0;
+        font-weight: bold;
+        max-width: 80%;
+        color: #fff !important;
+        font-family: inherit !important;
+    }
+
+    .link-tile-arrow {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        svg {
+            width: 24px;
+            height: 24px;
+            color: #fff;
+        }
+    }
+
+    .link-tile-background {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-size: cover;
+        background-position: center;
+        transition: transform 0.2s ease-out; // Leicht reduzierte Dauer
+    }
+
+    .link-tile:hover, .link-tile:focus {
+        .link-tile-background {
+            transform: scale(1.02);
+        }
+
+    }
+}
+
+@media (min-width: 768px) {
+    .wp-block-gruenerator-link-tile-block .link-tile .link-tile-title {
+        font-size: 2.5rem !important;
+    }
+}

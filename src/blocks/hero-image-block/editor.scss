@@ -1,0 +1,96 @@
+@import '../../styles/theme-bridge';
+
+.wp-block-gruenerator-hero-image-block {
+    // Editor-spezifische Stile
+    
+    .hero-image-block {
+        position: relative;
+        background-size: cover;
+        background-repeat: no-repeat;
+        width: 100%;
+        background-position: center;
+        height: 60vh;
+        min-height: 400px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+
+        &::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.4);
+        }
+    }
+
+    .hero-content {
+        position: relative;
+        color: #ffffff;
+        text-align: left;
+        max-width: 800px;
+        z-index: 1; // Stellt sicher, dass der Inhalt über dem Overlay liegt
+
+        h2 {
+            font-size: $font-size-base * 3;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+
+        p {
+            font-size: $font-size-base * 1.2;
+            line-height: 1.5;
+        }
+
+        // Editor-spezifische Anpassungen
+        .rich-text {
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 0.5rem;
+            border-radius: 4px;
+
+            &:focus {
+                outline: none;
+                box-shadow: 0 0 0 2px $primary;
+            }
+        }
+    }
+
+    .components-button {
+        margin-top: 1rem;
+    }
+
+    // Responsive Anpassungen für den Editor
+    @media (max-width: map-get($container-max-widths, 'md')) {
+        .hero-image-block {
+            height: 50vh;
+            min-height: 300px;
+        }
+
+        .hero-content {
+            h2 {
+                font-size: $font-size-base * 2;
+            }
+
+            p {
+                font-size: $font-size-base;
+            }
+        }
+    }
+}
+
+// Zusätzliche Editor-spezifische Stile
+.wp-block-gruenerator-hero-image-block {
+    .block-editor-rich-text__editable {
+        color: #ffffff;
+    }
+
+    .block-editor-media-placeholder {
+        background-color: rgba(0, 0, 0, 0.1);
+        border: 2px dashed $primary;
+        padding: 2rem;
+        text-align: center;
+    }
+}

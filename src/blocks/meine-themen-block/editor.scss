@@ -1,0 +1,79 @@
+@import '../../styles/theme-bridge';
+.meine-themen-block {
+    &.rich-text {
+            background-color: rgba($primary, 0.1);
+            padding: 0.5rem;
+            border-radius: 4px;
+
+            &:focus {
+                outline: none;
+                box-shadow: 0 0 0 2px $primary;
+            }
+        }
+    }
+
+
+
+    .theme-image {
+       
+        // Editor-spezifische Anpassungen
+        &.components-button {
+            height: 150px;
+            background-color: rgba($primary, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: $primary;
+            font-weight: bold;
+            text-transform: uppercase;
+            border: 2px dashed $primary;
+        }
+    }
+
+    .theme-title {
+       
+
+        // Editor-spezifische Anpassungen
+        &.rich-text {
+            background-color: rgba($primary, 0.1);
+            padding: 0.5rem;
+            border-radius: 4px;
+
+            &:focus {
+                outline: none;
+                box-shadow: 0 0 0 2px $primary;
+            }
+        }
+    }
+
+    .theme-content {
+     
+        // Editor-spezifische Anpassungen
+        &.rich-text {
+            background-color: rgba($body-color, 0.05);
+            padding: 0.5rem;
+            border-radius: 4px;
+
+            &:focus {
+                outline: none;
+                box-shadow: 0 0 0 2px $body-color;
+            }
+        }
+    }
+
+// Zusätzliche Editor-spezifische Stile
+.wp-block-gruenerator-meine-themen-block {
+    .block-editor-media-placeholder {
+        background-color: rgba(0, 0, 0, 0.1);
+        border: 2px dashed $primary;
+        padding: 2rem;
+        text-align: center;
+        color: $primary;
+    }
+
+    .components-panel__body {
+        .components-base-control {
+            margin-bottom: 1rem;
+        }
+    }
+}

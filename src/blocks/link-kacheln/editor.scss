@@ -1,0 +1,110 @@
+@import '../../styles/theme-bridge';
+
+.wp-block-gruenerator-link-tile-block {
+    // Editor-spezifische Stile
+    border: 1px dashed $primary;
+    padding: 1rem;
+    
+    .link-tile {
+        position: relative;
+        background-size: cover;
+        background-position: center;
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        height: 375px;
+        display: block;
+        color: #fff;
+        margin-bottom: 1rem; // Abstand zum Button hinzufügen
+    }
+
+    .link-tile-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(to bottom, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.6));
+        z-index: 1;
+    }
+
+    .link-tile-content {
+        position: absolute;
+        bottom: 10px;
+        left: 0;
+        right: 0;
+        padding: 1.5rem 2rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        z-index: 2;
+    }
+
+    .link-tile-title {
+        font-size: 2.5rem !important;
+        margin: 0;
+        font-weight: bold;
+        max-width: 80%;
+        color: #fff !important;
+        font-family: inherit !important;
+
+        // Editor-spezifische Anpassungen
+        &.rich-text {
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 0.5rem;
+            border-radius: 4px;
+
+            &:focus {
+                outline: none;
+                box-shadow: 0 0 0 2px $primary;
+            }
+        }
+    }
+
+    .link-tile-arrow {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        svg {
+            width: 24px;
+            height: 24px;
+            color: #fff;
+        }
+    }
+
+    .link-tile-background {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-size: cover;
+        background-position: center;
+    }
+
+}
+
+// Zusätzliche Editor-spezifische Stile
+.wp-block-gruenerator-link-tile-block {
+    .block-editor-media-placeholder {
+        background-color: rgba(0, 0, 0, 0.1);
+        border: 2px dashed $primary;
+        padding: 2rem;
+        text-align: center;
+        color: $primary;
+    }
+
+    .components-panel__body {
+        .components-base-control {
+            margin-bottom: 1rem;
+        }
+    }
+}
+
+// Responsive Anpassungen für den Editor
+@media (min-width: 768px) {
+    .wp-block-gruenerator-link-tile-block .link-tile .link-tile-title {
+        font-size: 2.5rem !important;
+    }
+}

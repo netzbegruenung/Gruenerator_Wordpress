@@ -1,0 +1,125 @@
+@import '../../styles/theme-bridge';
+
+.wp-block-gruenerator-contact-form-block {
+    // Editor-spezifische Stile
+    .contact-form-block {
+        min-height: 400px;
+        background-size: cover;
+        background-position: center;
+        position: relative;
+        
+        &::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.4);
+            z-index: 1;
+        }
+    }
+
+    .contact-form-content {
+        position: relative;
+        z-index: 2;
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 2rem;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 2rem;
+    }
+
+    .contact-form-left {
+        flex: 1;
+        min-width: 300px;
+        max-width: 400px;
+    }
+
+    .contact-form-right {
+        flex: 2;
+        min-width: 300px;
+    }
+
+    .contact-form-title {
+        color: white;
+        font-size: $font-size-base * 2.5;
+        margin-bottom: 1.5rem;
+        text-align: left;
+
+        &.rich-text {
+            background-color: rgba($primary, 0.1);
+            padding: 0.5rem;
+            border-radius: 4px;
+
+            &:focus {
+                outline: none;
+                box-shadow: 0 0 0 2px $primary;
+            }
+        }
+    }
+
+    .block-editor-media-placeholder {
+        background-color: rgba(0, 0, 0, 0.1);
+        border: 2px dashed $primary;
+        padding: 2rem;
+        text-align: center;
+        color: $primary;
+    }
+
+    .social-icons {
+        display: flex;
+        gap: 1rem;
+        margin-bottom: 1.5rem;
+
+        .components-base-control {
+            margin-bottom: 0.5rem;
+        }
+
+        .components-text-control__input {
+            background-color: rgba(255, 255, 255, 0.9);
+            border-color: $primary;
+            width: 100%;
+            padding: 0.75rem;
+            border-radius: 4px;
+
+            &:focus {
+                outline: none;
+                border-color: custom-color('tanne');
+                box-shadow: 0 0 0 2px rgba(custom-color('tanne'), 0.1);
+            }
+        }
+    }
+
+    // Editor-spezifische Formular-Vorschau
+    .block-editor-block-list__layout {
+        background: rgba(255, 255, 255, 0.95);
+        padding: 2rem;
+        border-radius: 8px;
+        width: 100%;
+    }
+}
+
+// Responsive Anpassungen für den Editor
+@media (max-width: 768px) {
+    .wp-block-gruenerator-contact-form-block {
+        .contact-form-content {
+            flex-direction: column;
+        }
+
+        .contact-form-left,
+        .contact-form-right {
+            max-width: 100%;
+        }
+
+        .contact-form-title {
+            text-align: center;
+            font-size: $font-size-base * 2;
+        }
+
+        .social-icons {
+            justify-content: center;
+        }
+    }
+}
