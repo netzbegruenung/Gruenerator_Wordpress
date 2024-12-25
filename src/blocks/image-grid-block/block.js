@@ -18,6 +18,10 @@ const settings = {
         align: ['wide', 'full']
     },
     attributes: {
+        sectionTitle: {
+            type: 'string',
+            default: __('Aktuelle Themen', 'gruenerator')
+        },
         items: {
             type: 'array',
             default: [
