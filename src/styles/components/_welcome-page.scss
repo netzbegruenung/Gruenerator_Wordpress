@@ -1,0 +1,70 @@
+// Welcome Page Komponente
+.gruenerator-welcome-page {
+    background: custom-color('weiss');
+    border-radius: 8px;
+    padding: 3rem 2rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    text-align: center;
+
+    h2 {
+        @extend %heading-large;
+    }
+
+    p {
+        @extend %text-base;
+        max-width: 800px;
+        margin: 0 auto 2rem;
+    }
+
+    .gruenerator-welcome-features {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 2rem;
+        margin: 3rem 0;
+
+        .feature {
+            padding: 1.5rem;
+            background: rgba(0, 84, 55, 0.02);
+            border-radius: 8px;
+            transition: background-color 0.2s ease;
+            border: 1px solid transparent;
+
+            &:hover {
+                background: custom-color('weiss');
+                border-color: rgba(0, 137, 57, 0.1);
+            }
+
+            .dashicons {
+                font-size: 3em;
+                width: auto;
+                height: auto;
+                color: custom-color('klee');
+                margin-bottom: 1rem;
+            }
+
+            h3 {
+                @extend %card-title;
+            }
+
+            p {
+                @extend %text-base;
+                margin-bottom: 0;
+            }
+        }
+    }
+}
+
+// Responsive Styles
+@media screen and (max-width: 782px) {
+    .gruenerator-welcome-page {
+        padding: 1.5rem 1rem;
+
+        h2 {
+            font-size: 1.75em;
+        }
+
+        .gruenerator-welcome-features {
+            grid-template-columns: 1fr !important;
+        }
+    }
+} 

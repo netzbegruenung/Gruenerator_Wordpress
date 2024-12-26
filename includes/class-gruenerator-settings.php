@@ -114,7 +114,7 @@ class Gruenerator_Settings {
                         <li>Aktionsbereich</li>
                         <li>Kontaktbereich</li>
                     </ul>
-                    <p class="description" style="color: #d63638;">Achtung: Diese Aktion kann nicht rückgängig gemacht werden!</p>
+                    <p class="description">Achtung: Diese Aktion kann nicht rückgängig gemacht werden!</p>
                     
                     <form method="post" action="<?php echo esc_url(admin_url('admin-post.php')); ?>" onsubmit="return confirm('Bist du sicher, dass du alle Einstellungen zurücksetzen möchtest? Diese Aktion kann nicht rückgängig gemacht werden!');">
                         <?php wp_nonce_field('gruenerator_reset_settings_nonce'); ?>
@@ -124,30 +124,6 @@ class Gruenerator_Settings {
                 </div>
             </div>
         </div>
-
-        <style>
-            .gruenerator-settings-section {
-                margin: 2rem 0;
-                max-width: 800px;
-            }
-            .gruenerator-settings-card {
-                background: white;
-                border: 1px solid #ccd0d4;
-                border-radius: 4px;
-                padding: 1.5rem;
-                margin: 1rem 0;
-            }
-            .gruenerator-settings-card h3 {
-                margin-top: 0;
-            }
-            .gruenerator-settings-card ul {
-                list-style: disc;
-                margin-left: 1.5rem;
-            }
-            .gruenerator-settings-card .button {
-                margin-top: 1rem;
-            }
-        </style>
         <?php
     }
 

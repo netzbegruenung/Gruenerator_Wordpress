@@ -1,0 +1,26 @@
+.topmenu {
+    display: none !important;
+}
+
+.site-header > .bloginfo.bg-primary {
+    background-color: #005437 !important;    
+}
+
+.navbar.navbar-main.navbar-expand-lg.bg-white {
+    font-weight: bold;
+
+    a {
+        text-transform: none;
+        transition: background-color 0.3s ease;
+        
+        &:hover {
+            background-color: rgba(0, 0, 0, 0.05);
+        }
+    }
+}
+
+@media (max-width: 768px) {
+    .navbar.navbar-main {
+        padding: 0.5rem;
+    }
+} 

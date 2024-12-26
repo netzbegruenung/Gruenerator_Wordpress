@@ -1,0 +1,151 @@
+// Progress Bar Komponente
+.gruenerator-progress-bar {
+    display: flex;
+    justify-content: space-between;
+    margin: 2.5rem 0;
+    position: relative;
+    padding: 0 1rem;
+    
+    &::before {
+        content: '';
+        position: absolute;
+        top: 15px; // Zentriert mit der Mitte des Kreises
+        left: 50px;
+        right: 50px;
+        height: 3px;
+        background: linear-gradient(to right, 
+            custom-color('klee') 0%,
+            custom-color('klee') var(--progress, 0%),
+            rgba(0, 0, 0, 0.08) var(--progress, 0%),
+            rgba(0, 0, 0, 0.08) 100%
+        );
+        border-radius: 3px;
+    }
+}
+
+.gruenerator-progress-step {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 1;
+
+    .step-number {
+        width: 32px;
+        height: 32px;
+        background: custom-color('weiss');
+        border: 3px solid rgba(0, 0, 0, 0.08);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: $darkgray;
+        font-weight: 600;
+        font-size: 0.9em;
+        margin-bottom: 0.75rem;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    }
+
+    .step-name {
+        color: $darkgray;
+        font-size: 0.9em;
+        font-weight: 500;
+        opacity: 0.7;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        text-align: center;
+        max-width: 120px;
+        line-height: 1.3;
+    }
+
+    &.active {
+        .step-number {
+            background: custom-color('klee');
+            border-color: custom-color('klee');
+            color: custom-color('weiss');
+            box-shadow: 0 3px 6px rgba(0, 137, 57, 0.2);
+            transform: scale(1.1);
+        }
+
+        .step-name {
+            color: custom-color('tanne');
+            opacity: 1;
+            transform: translateY(2px);
+        }
+    }
+
+    &.completed {
+        .step-number {
+            background: custom-color('klee');
+            border-color: custom-color('klee');
+            color: custom-color('weiss');
+
+            &::after {
+                content: "✓";
+                display: inline-block;
+                font-size: 1em;
+                animation: checkmark 0.4s cubic-bezier(0.65, 0, 0.35, 1.5);
+            }
+        }
+
+        .step-name {
+            color: custom-color('tanne');
+            opacity: 1;
+        }
+
+        & ~ .gruenerator-progress-step {
+            .step-number {
+                border-color: rgba(0, 0, 0, 0.08);
+            }
+        }
+    }
+}
+
+@keyframes checkmark {
+    0% {
+        transform: scale(0) rotate(-45deg);
+        opacity: 0;
+    }
+    100% {
+        transform: scale(1) rotate(0);
+        opacity: 1;
+    }
+}
+
+// Responsive Styles
+@media screen and (max-width: 782px) {
+    .gruenerator-progress-bar {
+        margin: 2rem 0;
+        padding: 0 0.5rem;
+        overflow-x: auto;
+        padding-bottom: 1rem;
+        -webkit-overflow-scrolling: touch;
+        scroll-behavior: smooth;
+
+        &::before {
+            left: 35px;
+            right: 35px;
+        }
+    }
+
+    .gruenerator-progress-step {
+        min-width: 100px;
+        margin: 0 0.75rem;
+
+        .step-number {
+            width: 28px;
+            height: 28px;
+            font-size: 0.85em;
+        }
+
+        .step-name {
+            font-size: 0.8em;
+            max-width: 90px;
+        }
+
+        &.active .step-number {
+            transform: scale(1.05);
+        }
+    }
+} 

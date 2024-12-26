@@ -1,0 +1,44 @@
+// Gemeinsame Button-Styles
+%button-base {
+    padding: 0.75rem 1.5rem;
+    height: auto;
+    line-height: 1.4;
+    font-size: 1em;
+    min-width: 200px;
+    text-align: center;
+    transition: all 0.2s ease;
+    border-radius: 6px;
+    font-weight: 500;
+    margin-top: 1rem;
+}
+
+%button-primary {
+    @extend %button-base;
+    background: custom-color('tanne');
+    border: none;
+    color: custom-color('weiss');
+    box-shadow: 0 2px 8px rgba(0, 84, 55, 0.15);
+
+    &:hover,
+    &:focus {
+        transform: translateY(-1px);
+        background: custom-color('klee');
+        box-shadow: 0 3px 12px rgba(0, 84, 55, 0.2);
+        color: custom-color('weiss') !important;
+    }
+}
+
+%button-secondary {
+    @extend %button-base;
+    background: custom-color('weiss');
+    border: 2px solid $darkgray;
+    color: $darkgray !important;
+
+    &:hover,
+    &:focus {
+        background: custom-color('weiss');
+        border-color: custom-color('tanne');
+        color: custom-color('tanne') !important;
+        transform: translateY(-1px);
+    }
+} 

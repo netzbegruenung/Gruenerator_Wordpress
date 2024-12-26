@@ -1,0 +1,10 @@
+// Theme-Variablen und Mixins
+@import 'styles/theme-bridge';
+
+// Editor Styles für Blöcke
+@import 'blocks/hero-block/editor';
+@import 'blocks/about-block/editor';
+@import 'blocks/hero-image-block/editor';
+@import 'blocks/meine-themen-block/editor';
+@import 'blocks/image-grid-block/editor';
+@import 'blocks/contact-form-block/editor'; 
