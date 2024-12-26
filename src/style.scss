@@ -1,0 +1,16 @@
+// Theme-Variablen und Mixins
+@import 'styles/theme-bridge';
+
+// Block Styles
+@import 'blocks/hero-block/style';
+@import 'blocks/about-block/style';
+@import 'blocks/hero-image-block/style';
+@import 'blocks/meine-themen-block/style';
+@import 'blocks/image-grid-block/style';
+@import 'blocks/contact-form-block/style';
+
+// Admin Styles
+@import 'styles/admin-dashboard';
+@import 'styles/admin-toggle';
+@import 'styles/customizer';
+@import 'styles/setup-wizard'; 
