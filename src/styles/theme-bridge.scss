@@ -9,21 +9,21 @@ $custom-colors: (
     sand: #f5f1e9,
     grashalm: #8abd24,
     himmel: #0ba1dd,
-    black: #000,
-    black-500: #201d1b,
-    gray: #eff2ed,
-    gray-500: #6b7a80,
-    white: #fff
+    schwarz: #000,
+    schwarz-500: #201d1b,
+    grau: #eff2ed,
+    grau-500: #6b7a80,
+    weiss: #fff
 );
 
 $primary: map-get($custom-colors, "tanne");
 $secondary: map-get($custom-colors, "klee");
-$white: map-get($custom-colors, "white");
-$black: map-get($custom-colors, "black");
-$black-500: map-get($custom-colors, "black-500");
+$white: map-get($custom-colors, "weiss");
+$black: map-get($custom-colors, "schwarz");
+$black-500: map-get($custom-colors, "schwarz-500");
 $white-90: rgba(255, 255, 255, 0.9);
 $dark: #ddd;
-$gray-500: map-get($custom-colors, "gray-500");
+$gray-500: map-get($custom-colors, "grau-500");
 $darkgray: #333;
 $lightgray: #aeb2ad;
 $very-light-gray: #d6d9d6;

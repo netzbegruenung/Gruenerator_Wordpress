@@ -1,0 +1,51 @@
+// Gemeinsame Card-Styles
+%card-base {
+    background: custom-color('white');
+    border-radius: 8px;
+    padding: 2rem;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    border: 1px solid transparent;
+
+    &:hover {
+        box-shadow: 0 4px 16px rgba(0, 137, 57, 0.1);
+    }
+}
+
+%card-title {
+    color: custom-color('tanne');
+    font-size: 1.4em;
+    margin: 0 0 1.25rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    font-weight: 600;
+}
+
+%card-text {
+    color: $darkgray;
+    font-size: 1.1em;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+}
+
+%card-list {
+    list-style: none;
+    margin: 1.25rem 0 1.75rem;
+    padding: 0;
+
+    li {
+        color: $darkgray;
+        padding: 0.5rem 0 0.5rem 1.75rem;
+        position: relative;
+        line-height: 1.5;
+        font-size: 1.05em;
+
+        &:before {
+            content: "✓";
+            color: custom-color('klee');
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+        }
+    }
+} 

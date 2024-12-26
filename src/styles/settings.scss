@@ -1,0 +1,70 @@
+@import './index';
+
+.gruenerator-settings-section {
+    margin: 2.5rem 0;
+    max-width: 900px;
+
+    h2 {
+        @extend %heading-section;
+    }
+
+    > p {
+        @extend %text-base;
+    }
+
+    .gruenerator-settings-card {
+        @extend %card-base;
+        margin: 1.5rem 0 2.5rem;
+
+        h3 {
+            @extend %card-title;
+        }
+
+        p {
+            @extend %text-base;
+
+            &.description {
+                @extend %text-description;
+            }
+        }
+
+        ul {
+            @extend %card-list;
+        }
+
+        .button {
+            &.button-primary {
+                @extend %button-primary;
+            }
+
+            &.button-secondary {
+                @extend %button-secondary;
+            }
+        }
+    }
+}
+
+// Responsive Styles
+@media screen and (max-width: 782px) {
+    .gruenerator-settings-section {
+        margin: 1.5rem 0;
+        padding: 0 1rem;
+
+        h2 {
+            font-size: 1.75em;
+        }
+
+        .gruenerator-settings-card {
+            padding: 1.5rem;
+
+            h3 {
+                font-size: 1.3em;
+            }
+
+            .button {
+                width: 100%;
+                min-width: auto;
+            }
+        }
+    }
+} 

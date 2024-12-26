@@ -43,16 +43,16 @@ function gruenerator_setup_wizard() {
     if (gruenerator_is_setup_complete() && $current_step === 1 && !isset($_POST['gruenerator_restart_setup'])) {
         ?>
         <div class="wrap">
-            <h2>Setup-Assistent</h2>
-            <div class="gruenerator-card">
-                <div class="gruenerator-card-header">
-                    <span class="dashicons dashicons-info"></span>
-                    <h2>Setup bereits abgeschlossen</h2>
-                </div>
+            <div class="gruenerator-setup-completed-notice">
+                <span class="dashicons dashicons-yes-alt"></span>
+                <h1>Setup-Assistent</h1>
                 <p>Das Setup wurde bereits abgeschlossen. Möchtest du es erneut durchführen?</p>
                 <form method="post">
                     <?php wp_nonce_field('gruenerator_restart_setup'); ?>
-                    <input type="submit" name="gruenerator_restart_setup" class="button button-primary" value="Setup neu starten">
+                    <div class="gruenerator-action-buttons">
+                        <input type="submit" name="gruenerator_restart_setup" class="button button-primary" value="Setup neu starten">
+                        <a href="<?php echo admin_url('admin.php?page=gruenerator-generator'); ?>" class="button button-secondary">Zum Dashboard</a>
+                    </div>
                 </form>
             </div>
         </div>
@@ -81,7 +81,7 @@ function gruenerator_setup_wizard() {
     gruenerator_log("Anzeige des Setup-Wizard-Schritts: " . $current_step, 'info');
 
     ?>
-    <div class="wrap gruenerator-setup-wizard">
+    <div class="wrap gruenerator-setup-wizard" data-step="<?php echo esc_attr($current_step); ?>">
         <h1><?php echo esc_html(get_admin_page_title()); ?></h1>
         <?php gruenerator_display_progress_bar($steps, $current_step); ?>
         <?php gruenerator_display_error_messages(); ?>

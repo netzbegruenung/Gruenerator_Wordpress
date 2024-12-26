@@ -1,0 +1,126 @@
+@import './index';
+
+.gruenerator-dashboard {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: rgba(custom-color('klee'), 0.05);
+
+    .gruenerator-header {
+        @extend %card-base;
+        text-align: center;
+        margin-bottom: 2.5rem;
+
+        h1 {
+            @extend %heading-large;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.625rem;
+            margin: 0;
+        }
+
+        .dashicons {
+            font-size: 2.5em;
+            width: auto;
+            height: auto;
+            color: custom-color('klee');
+        }
+
+        .about-description {
+            @extend %text-base;
+            margin-top: 1rem;
+        }
+    }
+
+    .gruenerator-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 1.5rem;
+        margin-bottom: 2.5rem;
+    }
+
+    .gruenerator-card {
+        @extend %card-base;
+        margin-bottom: 1rem;
+
+        &-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+
+            .dashicons {
+                font-size: 1.75em;
+                width: auto;
+                height: auto;
+                color: custom-color('klee');
+            }
+
+            h2 {
+                @extend %card-title;
+                margin: 0;
+            }
+        }
+
+        p {
+            @extend %text-base;
+        }
+
+        .button.button-primary {
+            @extend %button-primary;
+            width: 100%;
+        }
+    }
+
+    .gruenerator-footer {
+        @extend %card-base;
+        text-align: center;
+
+        h3 {
+            @extend %card-title;
+        }
+
+        p {
+            @extend %text-base;
+        }
+
+        a {
+            color: custom-color('klee');
+            text-decoration: none;
+            transition: all 0.2s ease;
+
+            &:hover,
+            &:focus {
+                color: custom-color('tanne');
+                text-decoration: underline;
+            }
+        }
+    }
+}
+
+// Responsive Styles
+@media screen and (max-width: 782px) {
+    .gruenerator-dashboard {
+        padding: 1rem;
+
+        .gruenerator-header {
+            padding: 1.5rem 1rem;
+            
+            h1 {
+                font-size: 2em;
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+
+        .gruenerator-grid {
+            grid-template-columns: 1fr;
+            gap: 1rem;
+        }
+
+        .gruenerator-card {
+            margin-bottom: 0;
+        }
+    }
+} 
