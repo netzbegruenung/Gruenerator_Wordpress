@@ -1,0 +1,67 @@
+.gruenerator-toggle-switch {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    .switch {
+        position: relative;
+        display: inline-block;
+        width: 60px;
+        height: 34px;
+        margin-right: 10px;
+
+        input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+
+            &:checked + .slider {
+                background-color: var(--gruenerator-tanne, #005538);
+                
+                &:before {
+                    transform: translateX(26px);
+                }
+            }
+
+            &:focus + .slider {
+                box-shadow: 0 0 1px var(--gruenerator-tanne, #005538);
+            }
+        }
+    }
+
+    .slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #ccc;
+        transition: .4s;
+
+        &:before {
+            position: absolute;
+            content: "";
+            height: 26px;
+            width: 26px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+        }
+
+        &.round {
+            border-radius: 34px;
+
+            &:before {
+                border-radius: 50%;
+            }
+        }
+    }
+}
+
+#css-status {
+    margin-left: 10px;
+    vertical-align: super;
+    font-weight: 500;
+} 
