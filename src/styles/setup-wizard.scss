@@ -1,0 +1,170 @@
+@import './index';
+
+// Komponenten importieren
+@import './components/progress-bar';
+@import './components/welcome-page';
+@import './components/completion-page';
+
+// Hauptcontainer
+.gruenerator-setup-wizard {
+    background: custom-color('weiss');
+    border-radius: 8px;
+    padding: 2rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    max-width: 900px;
+    margin: 1.5rem auto;
+
+    // Fortschrittsleiste im Willkommens-Schritt ausblenden
+    &[data-step="0"] {
+        .gruenerator-progress-bar {
+            display: none;
+        }
+    }
+
+    h1 {
+        @extend %heading-large;
+        text-align: center;
+    }
+
+    // Start-Button Styling
+    .button-primary {
+        @extend %button-primary;
+        min-width: 150px;
+        display: inline-block;
+        margin: 1rem 0;
+    }
+}
+
+// Step Content
+.gruenerator-step-content {
+    background: custom-color('weiss');
+    border-radius: 8px;
+    padding: 2rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    margin: 1.5rem 0;
+
+    h2 {
+        @extend %heading-section;
+    }
+
+    p {
+        @extend %text-base;
+        max-width: 800px;
+    }
+
+    .form-table {
+        width: 100%;
+        border-spacing: 0 0.75rem;
+        margin: 1.5rem 0;
+
+        th {
+            font-weight: 600;
+            color: custom-color('tanne');
+            padding: 1rem 1.5rem 1rem 0;
+            width: 200px;
+            vertical-align: top;
+            text-align: left;
+            font-size: 1em;
+        }
+
+        td {
+            padding: 0.75rem 0;
+            vertical-align: top;
+
+            input[type="text"],
+            input[type="url"],
+            input[type="email"],
+            textarea {
+                width: 100%;
+                max-width: 500px;
+                padding: 0.75rem;
+                border: 2px solid rgba(0, 0, 0, 0.1);
+                border-radius: 6px;
+                font-size: 0.95em;
+                transition: all 0.2s ease;
+                
+                &:focus {
+                    border-color: custom-color('klee');
+                    box-shadow: 0 0 0 2px rgba(0, 137, 57, 0.1);
+                    outline: none;
+                }
+            }
+
+            .checkbox-wrapper {
+                @extend %checkbox-base;
+            }
+
+            .description {
+                font-size: 0.9em;
+                color: $gray-500;
+                margin-top: 0.5rem;
+                display: block;
+                line-height: 1.5;
+            }
+        }
+    }
+}
+
+// Navigation Buttons
+.gruenerator-form-actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 2rem;
+    padding: 1.5rem;
+    background: custom-color('weiss');
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+
+    .button {
+        &.button-primary {
+            @extend %button-primary;
+        }
+
+        &.button-secondary {
+            @extend %button-secondary;
+        }
+    }
+}
+
+// Responsive Styles
+@media screen and (max-width: 782px) {
+    .gruenerator-setup-wizard {
+        margin: 1rem;
+        padding: 1rem;
+
+        h1 {
+            font-size: 1.75em;
+        }
+    }
+
+    .gruenerator-step-content {
+        padding: 1.25rem;
+
+        h2 {
+            font-size: 1.5em;
+        }
+
+        .form-table {
+            th {
+                width: 100%;
+                display: block;
+                padding: 0.5rem 0;
+            }
+
+            td {
+                display: block;
+                padding: 0 0 1rem 0;
+            }
+        }
+    }
+
+    .gruenerator-form-actions {
+        flex-direction: column-reverse;
+        gap: 0.75rem;
+
+        .button {
+            width: 100%;
+            margin: 0;
+        }
+    }
+} 

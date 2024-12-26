@@ -1,0 +1,173 @@
+// Completion Page Komponente
+.gruenerator-setup-complete {
+    background: custom-color('weiss');
+    border-radius: 8px;
+    padding: 3rem 2rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    text-align: center;
+    margin: 2rem auto;
+    max-width: 800px;
+
+    .gruenerator-success-message {
+        margin-bottom: 2rem;
+
+        .dashicons {
+            font-size: 4em;
+            width: auto;
+            height: auto;
+            color: custom-color('klee');
+            margin-bottom: 1rem;
+            animation: successPop 0.5s ease-out;
+        }
+
+        h2 {
+            @extend %heading-large;
+        }
+    }
+
+    .gruenerator-action-buttons {
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+        margin: 2rem 0;
+
+        .button {
+            &.button-primary {
+                @extend %button-primary;
+            }
+
+            &.button-secondary {
+                @extend %button-secondary;
+            }
+        }
+    }
+
+    .gruenerator-next-steps {
+        text-align: left;
+        background: rgba(0, 84, 55, 0.02);
+        padding: 2rem;
+        border-radius: 8px;
+        margin-top: 2rem;
+        border: 1px solid rgba(0, 137, 57, 0.1);
+
+        h3 {
+            @extend %card-title;
+        }
+
+        ul {
+            @extend %card-list;
+        }
+    }
+}
+
+// Setup Completed Notice
+.gruenerator-setup-completed-notice {
+    background: custom-color('weiss');
+    border-radius: 8px;
+    padding: 3rem 2rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    max-width: 900px;
+    margin: 2.5rem auto;
+    text-align: center;
+
+    h1 {
+        @extend %heading-large;
+        margin-bottom: 2rem;
+    }
+
+    p {
+        @extend %text-base;
+        max-width: 600px;
+        margin: 0 auto 2rem;
+    }
+
+    .gruenerator-action-buttons {
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+
+        .button {
+            &.button-primary {
+                @extend %button-primary;
+            }
+
+            &.button-secondary {
+                @extend %button-secondary;
+            }
+        }
+    }
+
+    .dashicons {
+        font-size: 4em;
+        width: auto;
+        height: auto;
+        color: custom-color('klee');
+        margin-bottom: 1.5rem;
+        animation: bounceIn 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    }
+}
+
+// Animations
+@keyframes successPop {
+    0% {
+        transform: scale(0);
+        opacity: 0;
+    }
+    70% {
+        transform: scale(1.2);
+        opacity: 0.7;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+@keyframes bounceIn {
+    0% {
+        transform: scale(0);
+        opacity: 0;
+    }
+    60% {
+        transform: scale(1.1);
+        opacity: 0.8;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+// Responsive Styles
+@media screen and (max-width: 782px) {
+    .gruenerator-setup-complete {
+        padding: 1.5rem 1rem;
+
+        h2 {
+            font-size: 1.75em;
+        }
+    }
+
+    .gruenerator-setup-completed-notice {
+        margin: 1.5rem 1rem;
+        padding: 2rem 1.5rem;
+
+        h1 {
+            font-size: 1.75em;
+        }
+
+        .gruenerator-action-buttons {
+            flex-direction: column;
+            gap: 0.75rem;
+
+            .button {
+                width: 100%;
+                margin: 0;
+            }
+        }
+
+        .dashicons {
+            font-size: 3em;
+        }
+    }
+} 
