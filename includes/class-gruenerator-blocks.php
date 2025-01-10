@@ -4,6 +4,9 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
+// Lade die Default Content Klasse
+require_once GRUENERATOR_PATH . 'includes/class-gruenerator-default-content.php';
+
 /**
  * Registriert alle notwendigen Scripts und Styles für die Blöcke.
  */
@@ -103,21 +106,17 @@ function gruenerator_register_all_blocks() {
         // 1. Hero Block
         'hero-block' => array(
             'attributes' => array(
-                'heroImageId' => array(
-                    'type' => 'integer',
-                    'default' => 0,
-                ),
                 'heroImageUrl' => array(
                     'type' => 'string',
-                    'default' => 'https://via.placeholder.com/600x400',
+                    'default' => Gruenerator_Default_Content::get_hero_content()['image'],
                 ),
                 'heroHeading' => array(
                     'type' => 'string',
-                    'default' => 'Hi, ich bin Maxi Mustermensch',
+                    'default' => Gruenerator_Default_Content::get_hero_content()['heading'],
                 ),
                 'heroText' => array(
                     'type' => 'string',
-                    'default' => 'Kandidat*in für den Wahlkreis 54 Musterstadt-Musterort.',
+                    'default' => Gruenerator_Default_Content::get_hero_content()['text'],
                 ),
             ),
         ),
@@ -126,12 +125,11 @@ function gruenerator_register_all_blocks() {
             'attributes' => array(
                 'title' => array(
                     'type' => 'string',
-                    'default' => 'Wer ich bin',
+                    'default' => Gruenerator_Default_Content::get_about_content()['title'],
                 ),
                 'content' => array(
                     'type' => 'string',
-                    'default' => 'Verwurzelt im Herzen von Musterstadt, mit einem festen Blick in die Zukunft: Dies beschreibt den Kern meiner Kandidatur für das Musterparlament. Als Musterberuf und langjährig engagierte Person in Musterorganisation habe ich stets die Bedeutung von Gemeinschaft, nachhaltiger Entwicklung und solidarischem Handeln aus nächster Nähe miterlebt. Mit einem offenen Ohr für alle Bürger*innen, einer lösungsorientierten Herangehensweise und dem festen Glauben an unsere gemeinsame Zukunft. Es geht darum, heute die Entscheidungen zu treffen, die morgen den Unterschied machen können. Für eine Politik, die auf Ausgleich und Nachhaltigkeit setzt, und für ein Musterstadt, in dem jede Stimme zählt.',
-                    'gruenerator'
+                    'default' => Gruenerator_Default_Content::get_about_content()['content'],
                 ),
             ),
         ),
@@ -144,15 +142,15 @@ function gruenerator_register_all_blocks() {
                 ),
                 'backgroundImageUrl' => array(
                     'type' => 'string',
-                    'default' => 'https://via.placeholder.com/1200x600',
+                    'default' => Gruenerator_Default_Content::get_hero_image_content()['image'],
                 ),
                 'title' => array(
                     'type' => 'string',
-                    'default' => 'Gemeinsam in eine gute Zukunft!',
+                    'default' => Gruenerator_Default_Content::get_hero_image_content()['title'],
                 ),
                 'subtitle' => array(
                     'type' => 'string',
-                    'default' => 'Füge hier deinen Claim ein... Die Herausforderungen sind groß, aber gemeinsam mit dir können wir sie stemmen.',
+                    'default' => Gruenerator_Default_Content::get_hero_image_content()['subtitle'],
                 ),
             ),
         ),
@@ -165,26 +163,7 @@ function gruenerator_register_all_blocks() {
                 ),
                 'themes' => array(
                     'type' => 'array',
-                    'default' => array(
-                        [
-                            'imageId' => 0,
-                            'imageUrl' => 'https://via.placeholder.com/600x400',
-                            'title' => 'Mit Herz für Klimaschutz.',
-                            'content' => 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.'
-                        ],
-                        [
-                            'imageId' => 0,
-                            'imageUrl' => 'https://via.placeholder.com/600x400',
-                            'title' => 'Grüne und günstige Mobilität.',
-                            'content' => 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.'
-                        ],
-                        [
-                            'imageId' => 0,
-                            'imageUrl' => 'https://via.placeholder.com/600x400',
-                            'title' => 'Gemeinsam gegen Hass und Hetze.',
-                            'content' => 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.'
-                        ]
-                    ),
+                    'default' => Gruenerator_Default_Content::get_themes(),
                     'items' => array(
                         'type' => 'object',
                         'properties' => array(
@@ -198,11 +177,11 @@ function gruenerator_register_all_blocks() {
                             ),
                             'title' => array(
                                 'type' => 'string',
-                                'default' => 'Mit Herz für Klimaschutz.',
+                                'default' => '',
                             ),
                             'content' => array(
                                 'type' => 'string',
-                                'default' => 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.',
+                                'default' => '',
                             ),
                         ),
                     ),
@@ -214,32 +193,9 @@ function gruenerator_register_all_blocks() {
             'attributes' => array(
                 'items' => array(
                     'type' => 'array',
-                    'default' => array(
-                        array(
-                            'imageId'  => 0,
-                            'imageUrl' => '',
-                            'text'     => 'Spenden für Grün',
-                            'link'     => '',
-                        ),
-                        array(
-                            'imageId'  => 0,
-                            'imageUrl' => '',
-                            'text'     => 'Werde Mitglied',
-                            'link'     => '',
-                        ),
-                        array(
-                            'imageId'  => 0,
-                            'imageUrl' => '',
-                            'text'     => 'Haustürwahl-kampf',
-                            'link'     => '',
-                        ),
-                    ),
+                    'default' => Gruenerator_Default_Content::get_actions(),
                 ),
             ),
-            'render_callback' => 'gruenerator_render_image_grid_block',
-            'style'           => 'gruenerator-blocks-frontend',
-            'editor_style'    => 'gruenerator-blocks-editor',
-            'editor_script'   => 'gruenerator-blocks',
         ),
         // 6. Contact Form Block
         'contact-form-block' => array(
@@ -254,19 +210,11 @@ function gruenerator_register_all_blocks() {
                 ),
                 'title' => array(
                     'type' => 'string',
-                    'default' => 'Sag Hallo!',
+                    'default' => Gruenerator_Default_Content::get_contact_form_content()['title'],
                 ),
                 'email' => array(
                     'type' => 'string',
-                    'default' => '',
-                ),
-                'phone' => array(
-                    'type' => 'string',
-                    'default' => '',
-                ),
-                'address' => array(
-                    'type' => 'string',
-                    'default' => '',
+                    'default' => Gruenerator_Default_Content::get_contact_form_content()['email'],
                 ),
                 'socialMedia' => array(
                     'type' => 'array',
@@ -324,9 +272,10 @@ function gruenerator_render_hero_block($attributes, $content) {
     try {
         error_log('Rendering hero block: ' . print_r($attributes, true));
 
-        $hero_image_url = !empty($attributes['heroImageUrl']) ? $attributes['heroImageUrl'] : 'https://via.placeholder.com/600x400';
-        $hero_heading = !empty($attributes['heroHeading']) ? $attributes['heroHeading'] : 'Hi, ich bin Maxi Mustermensch';
-        $hero_text = !empty($attributes['heroText']) ? $attributes['heroText'] : 'Kandidat*in für den Wahlkreis 54 Musterstadt-Musterort.';
+        $default_content = Gruenerator_Default_Content::get_hero_content();
+        $hero_image_url = !empty($attributes['heroImageUrl']) ? $attributes['heroImageUrl'] : $default_content['image'];
+        $hero_heading = !empty($attributes['heroHeading']) ? $attributes['heroHeading'] : $default_content['heading'];
+        $hero_text = !empty($attributes['heroText']) ? $attributes['heroText'] : $default_content['text'];
 
         ob_start();
         ?>
@@ -367,12 +316,9 @@ function gruenerator_render_about_block($attributes, $content) {
     try {
         error_log('Rendering about block: ' . print_r($attributes, true));
 
-        // Hole die Attribute mit Fallback-Werten
-        $title = !empty($attributes['title']) ? $attributes['title'] : __('Wer ich bin', 'gruenerator');
-        $content = !empty($attributes['content']) ? $attributes['content'] : __(
-            'Verwurzelt im Herzen von Musterstadt, mit einem festen Blick in die Zukunft: Dies beschreibt den Kern meiner Kandidatur für das Musterparlament. Als Musterberuf und langjährig engagierte Person in Musterorganisation habe ich stets die Bedeutung von Gemeinschaft, nachhaltiger Entwicklung und solidarischem Handeln aus nächster Nähe miterlebt. Mit einem offenen Ohr für alle Bürger*innen, einer lösungsorientierten Herangehensweise und dem festen Glauben an unsere gemeinsame Zukunft. Es geht darum, heute die Entscheidungen zu treffen, die morgen den Unterschied machen können. Für eine Politik, die auf Ausgleich und Nachhaltigkeit setzt, und für ein Musterstadt, in dem jede Stimme zählt.',
-            'gruenerator'
-        );
+        $default_content = Gruenerator_Default_Content::get_about_content();
+        $title = !empty($attributes['title']) ? $attributes['title'] : $default_content['title'];
+        $content = !empty($attributes['content']) ? $attributes['content'] : $default_content['content'];
 
         // Erlaubte HTML-Tags für wp_kses
         $allowed_html = array(
@@ -415,9 +361,10 @@ function gruenerator_render_hero_image_block($attributes, $content) {
     try {
         error_log('Rendering hero image block: ' . print_r($attributes, true));
 
-        $background_image_url = !empty($attributes['backgroundImageUrl']) ? $attributes['backgroundImageUrl'] : 'https://via.placeholder.com/1200x600';
-        $title = !empty($attributes['title']) ? $attributes['title'] : 'Gemeinsam in eine gute Zukunft!';
-        $subtitle = !empty($attributes['subtitle']) ? $attributes['subtitle'] : 'Füge hier deinen Claim ein... Die Herausforderungen sind groß, aber gemeinsam mit dir können wir sie stemmen.';
+        $default_content = Gruenerator_Default_Content::get_hero_image_content();
+        $background_image_url = !empty($attributes['backgroundImageUrl']) ? $attributes['backgroundImageUrl'] : $default_content['image'];
+        $title = !empty($attributes['title']) ? $attributes['title'] : $default_content['title'];
+        $subtitle = !empty($attributes['subtitle']) ? $attributes['subtitle'] : $default_content['subtitle'];
         $align_class = isset($attributes['align']) ? ' align' . $attributes['align'] : ' alignfull';
 
         ob_start();
@@ -450,26 +397,8 @@ function gruenerator_render_meine_themen_block($attributes, $content) {
         error_log('Rendering meine themen block: ' . print_r($attributes, true));
 
         $title = !empty($attributes['title']) ? $attributes['title'] : 'Meine Themen';
-        $themes = !empty($attributes['themes']) && is_array($attributes['themes']) ? $attributes['themes'] : [
-            [
-                'imageId' => 0,
-                'imageUrl' => 'https://via.placeholder.com/600x400',
-                'title' => 'Mit Herz für Klimaschutz.',
-                'content' => 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.'
-            ],
-            [
-                'imageId' => 0,
-                'imageUrl' => 'https://via.placeholder.com/600x400',
-                'title' => 'Grüne und günstige Mobilität.',
-                'content' => 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.'
-            ],
-            [
-                'imageId' => 0,
-                'imageUrl' => 'https://via.placeholder.com/600x400',
-                'title' => 'Gemeinsam gegen Hass und Hetze.',
-                'content' => 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.'
-            ]
-        ];
+        $default_themes = Gruenerator_Default_Content::get_themes();
+        $themes = !empty($attributes['themes']) && is_array($attributes['themes']) ? $attributes['themes'] : $default_themes;
 
         ob_start();
         ?>
@@ -541,9 +470,10 @@ function gruenerator_render_image_grid_block($attributes) {
 // Contact Form Block
 function gruenerator_render_contact_form_block($attributes, $content) {
     try {
+        $default_content = Gruenerator_Default_Content::get_contact_form_content();
         $background_image_url = !empty($attributes['backgroundImageUrl']) ? $attributes['backgroundImageUrl'] : 'https://via.placeholder.com/1200x600';
-        $title = !empty($attributes['title']) ? $attributes['title'] : __('Sag Hallo!', 'gruenerator');
-        $email = !empty($attributes['email']) ? $attributes['email'] : '';
+        $title = !empty($attributes['title']) ? $attributes['title'] : $default_content['title'];
+        $email = !empty($attributes['email']) ? $attributes['email'] : $default_content['email'];
         $social_media = !empty($attributes['socialMedia']) ? $attributes['socialMedia'] : array();
         $align_class = isset($attributes['align']) ? ' align' . $attributes['align'] : ' alignfull';
 
@@ -556,44 +486,20 @@ function gruenerator_render_contact_form_block($attributes, $content) {
                         <h2 class="contact-form-title"><?php echo esc_html($title); ?></h2>
                         <?php if ($email): ?>
                             <div class="contact-info">
-                                <div class="contact-item">
-                                    <i class="fas fa-envelope"></i>
-                                    <a href="mailto:<?php echo esc_attr($email); ?>"><?php echo esc_html($email); ?></a>
-                                </div>
-                            </div>
-                        <?php endif; ?>
-                        <?php if (!empty($social_media)): ?>
-                            <div class="social-icons">
-                                <?php foreach ($social_media as $profile): ?>
-                                    <a href="<?php echo esc_url($profile['url']); ?>" 
-                                       target="_blank"
-                                       rel="noopener noreferrer" 
-                                       aria-label="<?php echo esc_attr($profile['platform']); ?>">
-                                        <i class="<?php echo esc_attr($profile['icon']); ?>"></i>
-                                    </a>
-                                <?php endforeach; ?>
+                                <p><?php echo esc_html($default_content['description']); ?></p>
                             </div>
                         <?php endif; ?>
                     </div>
                     <div class="contact-form-right">
-                        <!-- wp:sunflower/contact-form -->
-                        <div class="wp-block-sunflower-contact-form">
-                            <?php echo do_blocks('<!-- wp:sunflower/contact-form --><!-- /wp:sunflower/contact-form -->'); ?>
-                        </div>
-                        <!-- /wp:sunflower/contact-form -->
+                        <!-- wp:sunflower/contact-form /-->
                     </div>
                 </div>
             </div>
         </div>
         <?php
-        $output = ob_get_clean();
-        if (empty($output)) {
-            error_log('Contact form block: Leere Ausgabe');
-            return '';
-        }
-        return $output;
+        return ob_get_clean();
     } catch (Exception $e) {
-        error_log('Fehler beim Rendern des Kontaktformular-Blocks: ' . $e->getMessage());
+        error_log('Fehler beim Rendern des Contact-Form-Blocks: ' . $e->getMessage());
         return '';
     }
 }

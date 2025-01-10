@@ -2,6 +2,8 @@
 
 Ein WordPress-Plugin, das Dir hilft, professionelle Kandidatenseiten für grüne Kandidierende mit Gutenberg-Blöcken zu erstellen. Entwickelt speziell für das [Sunflower WordPress-Theme](https://github.com/codeispoetry/sunflower).
 
+![Hero-Bereich](assets/images/Screenshot_Hero.png)
+
 ## 🚀 Features
 
 - Spezielle Gutenberg-Blöcke für Kandidatenseiten
@@ -12,6 +14,18 @@ Ein WordPress-Plugin, das Dir hilft, professionelle Kandidatenseiten für grüne
 - Setup-Assistent für schnelle Einrichtung
 - Social Media Integration
 - Vorgefertigte Block-Patterns für Kandidatenprofile
+
+![Hero-Bereich Alternative](assets/images/Screenshot_Hero2.png)
+
+## Setup-Assistent
+
+Der Setup-Assistent führt Dich Schritt für Schritt durch die Einrichtung Deiner Kandidatenseite:
+
+![Setup-Assistent](assets/images/Screenshot_Setupassistent.png)
+
+Nach Abschluss des Setups kannst Du direkt mit der Bearbeitung Deiner Seite beginnen:
+
+![Setup Abschluss](assets/images/Screenshot_Setup.png)
 
 ## 📋 Anforderungen
 

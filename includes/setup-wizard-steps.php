@@ -38,9 +38,102 @@ function gruenerator_welcome_page() {
         <form method="post" action="<?php echo esc_url(admin_url('admin-post.php')); ?>">
             <?php wp_nonce_field('gruenerator_setup_nonce'); ?>
             <input type="hidden" name="action" value="gruenerator_process_setup">
-            <input type="hidden" name="step" value="1">
+            <input type="hidden" name="step" value="0">
             <input type="submit" class="button button-primary" value="Setup starten">
         </form>
+    </div>
+    <?php
+}
+
+/**
+ * Inhaltsauswahl des Setup-Wizards
+ */
+function gruenerator_content_source() {
+    if (!current_user_can('manage_options')) {
+        gruenerator_log("Unzureichende Berechtigungen für Benutzer: " . wp_get_current_user()->user_login, 'error');
+        wp_die('Unzureichende Berechtigungen');
+    }
+    ?>
+    <div class="gruenerator-step-content">
+        <h2>Inhaltsquelle wählen</h2>
+        <p>Wähle aus, wie du die Inhalte für deine Landingpage bereitstellen möchtest.</p>
+
+        <div class="gruenerator-content-source-options">
+            <div class="content-source-option">
+                <label>
+                    <input type="radio" name="content_source" value="default" checked>
+                    <span class="option-title">Beispieltexte verwenden und selbst eingeben</span>
+                    <span class="option-description">Verwende unsere vorbereiteten Beispieltexte als Grundlage und passe sie nach deinen Wünschen an.</span>
+                </label>
+            </div>
+
+            <div class="content-source-option">
+                <label>
+                    <input type="radio" name="content_source" value="json">
+                    <span class="option-title">Grünerator Texte verwenden</span>
+                    <span class="option-description">Füge vorgefertigte Inhalte im JSON-Format ein.</span>
+                </label>
+
+                <div class="json-content-area" style="display: none;">
+                    <textarea name="json_content" rows="10" class="large-text code" placeholder="Füge hier deinen JSON-formatierten Inhalt ein..."><?php echo esc_textarea(Gruenerator_Content_Source::get_json_content()); ?></textarea>
+                    <p class="description">Füge hier den JSON-formatierten Inhalt ein. Das Format muss dem folgenden Schema entsprechen:</p>
+                    <pre class="json-schema"><?php echo esc_html(json_encode(Gruenerator_Content_Source::get_json_schema(), JSON_PRETTY_PRINT)); ?></pre>
+                </div>
+            </div>
+        </div>
+
+        <script>
+        jQuery(document).ready(function($) {
+            $('input[name="content_source"]').on('change', function() {
+                if ($(this).val() === 'json') {
+                    $('.json-content-area').slideDown();
+                } else {
+                    $('.json-content-area').slideUp();
+                }
+            });
+        });
+        </script>
+
+        <style>
+        .gruenerator-content-source-options {
+            margin: 2rem 0;
+        }
+        .content-source-option {
+            background: #fff;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        .content-source-option label {
+            display: block;
+            margin-bottom: 1rem;
+        }
+        .option-title {
+            font-weight: bold;
+            display: block;
+            margin: 0.5rem 0;
+        }
+        .option-description {
+            color: #666;
+            display: block;
+            margin-bottom: 1rem;
+        }
+        .json-content-area {
+            margin-top: 1rem;
+            padding: 1rem;
+            background: #f9f9f9;
+            border-radius: 4px;
+        }
+        .json-schema {
+            background: #f5f5f5;
+            padding: 1rem;
+            border-radius: 4px;
+            overflow: auto;
+            max-height: 300px;
+            font-size: 12px;
+        }
+        </style>
     </div>
     <?php
 }
