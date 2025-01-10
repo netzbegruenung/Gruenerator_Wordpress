@@ -4,7 +4,7 @@
     max-width: 1200px;
     margin: 0 auto;
     padding: 20px;
-    background-color: rgba(custom-color('klee'), 0.05);
+    background-color: #ffffff;
 
     .gruenerator-header {
         @extend %card-base;
@@ -35,14 +35,20 @@
 
     .gruenerator-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-        gap: 1.5rem;
-        margin-bottom: 2.5rem;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 2rem;
     }
 
     .gruenerator-card {
         @extend %card-base;
-        margin-bottom: 1rem;
+        display: flex;
+        flex-direction: column;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+        &:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+        }
 
         &-header {
             display: flex;
@@ -65,41 +71,57 @@
 
         p {
             @extend %text-base;
+            flex-grow: 1;
+            margin-bottom: 1.5rem;
         }
 
         .button.button-primary {
             @extend %button-primary;
             width: 100%;
+            margin-top: auto;
         }
     }
 
     .gruenerator-footer {
-        @extend %card-base;
-        text-align: center;
+        margin-top: 3rem;
+        padding: 1rem;
+        border-top: 1px solid #e5e5e5;
+        color: #666;
+        font-size: 0.9rem;
+        text-align: right;
 
         h3 {
-            @extend %card-title;
+            font-size: 0.9rem;
+            color: #444;
+            margin: 0 0 0.5rem;
+            font-weight: normal;
         }
 
         p {
-            @extend %text-base;
+            margin: 0;
+            line-height: 1.4;
         }
 
         a {
-            color: custom-color('klee');
+            color: #666;
             text-decoration: none;
-            transition: all 0.2s ease;
+            transition: color 0.2s ease;
 
             &:hover,
             &:focus {
-                color: custom-color('tanne');
-                text-decoration: underline;
+                color: custom-color('klee');
             }
         }
     }
 }
 
 // Responsive Styles
+@media screen and (max-width: 1200px) {
+    .gruenerator-dashboard .gruenerator-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
 @media screen and (max-width: 782px) {
     .gruenerator-dashboard {
         padding: 1rem;
@@ -116,11 +138,17 @@
 
         .gruenerator-grid {
             grid-template-columns: 1fr;
-            gap: 1rem;
+            gap: 1.5rem;
         }
 
         .gruenerator-card {
             margin-bottom: 0;
+        }
+
+        .gruenerator-footer {
+            margin-top: 2rem;
+            text-align: center;
+            padding: 1rem 0;
         }
     }
 } 

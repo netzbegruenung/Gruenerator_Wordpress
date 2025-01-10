@@ -17,31 +17,36 @@ function gruenerator_process_setup_wizard() {
     $current_step = isset($_POST['step']) ? intval($_POST['step']) : 0;
     
     switch ($current_step) {
+        case 0:
+            // Willkommensseite, keine Verarbeitung nötig
+            return true;
         case 1:
+            return gruenerator_process_content_source();
+        case 2:
             gruenerator_process_css_settings();
             break;
-        case 2:
+        case 3:
             gruenerator_process_social_networks();
             break;
-        case 3:
+        case 4:
             gruenerator_process_hero_section();
             break;
-        case 4:
+        case 5:
             gruenerator_process_about_me();
             break;
-        case 5:
+        case 6:
             gruenerator_process_hero_image_block();
             break;
-        case 6:
+        case 7:
             gruenerator_process_my_themes();
             break;
-        case 7:
+        case 8:
             gruenerator_process_image_grid();
             break;
-        case 8:
+        case 9:
             gruenerator_process_contact_form();
             break;
-        case 9:
+        case 10:
             gruenerator_process_final_step();
             break;
         default:
@@ -51,6 +56,36 @@ function gruenerator_process_setup_wizard() {
     
     gruenerator_log("Schritt " . $current_step . " erfolgreich verarbeitet", 'info');
     return true;
+}
+
+/**
+ * Verarbeitet die Auswahl der Inhaltsquelle
+ */
+function gruenerator_process_content_source() {
+    $content_source = isset($_POST['content_source']) ? sanitize_text_field($_POST['content_source']) : 'default';
+    $json_content = isset($_POST['json_content']) ? stripslashes($_POST['json_content']) : '';
+
+    if ($content_source === 'json') {
+        if (empty($json_content)) {
+            gruenerator_log("Kein JSON-Inhalt angegeben", 'error');
+            return false;
+        }
+
+        if (!Gruenerator_Content_Source::validate_json_content($json_content)) {
+            gruenerator_log("Ungültiger JSON-Inhalt", 'error');
+            return false;
+        }
+    }
+
+    $result = Gruenerator_Content_Source::set_content_source($content_source, $json_content);
+    if ($result) {
+        Gruenerator_Content_Source::mark_source_selected();
+        gruenerator_log("Inhaltsquelle erfolgreich gesetzt: " . $content_source, 'info');
+        return true;
+    }
+
+    gruenerator_log("Fehler beim Setzen der Inhaltsquelle", 'error');
+    return false;
 }
 
 function gruenerator_process_css_settings() {

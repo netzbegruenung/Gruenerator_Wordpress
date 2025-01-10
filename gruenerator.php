@@ -44,6 +44,13 @@ require_once GRUENERATOR_PATH . 'admin/gruenerator-setup-wizard.php';
 require_once GRUENERATOR_PATH . 'admin/social-media-settings-page.php';
 require_once GRUENERATOR_PATH . 'admin/gruenerator-settings.php';
 
+// Erforderliche Dateien einbinden
+require_once GRUENERATOR_PATH . 'includes/class-gruenerator-default-content.php';
+require_once GRUENERATOR_PATH . 'includes/class-gruenerator-content-source.php';
+require_once GRUENERATOR_PATH . 'includes/class-gruenerator-customizer.php';
+require_once GRUENERATOR_PATH . 'includes/class-gruenerator-settings.php';
+require_once GRUENERATOR_PATH . 'includes/class-gruenerator-meta-fields.php';
+
 /**
  * Enqueue Frontend Styles und Inline CSS
  */
@@ -170,6 +177,17 @@ function gruenerator_main_page() {
                 </a>
             </div>
 
+            <div class="gruenerator-card">
+                <div class="gruenerator-card-header">
+                    <span class="dashicons dashicons-admin-tools"></span>
+                    <h2>Einstellungen</h2>
+                </div>
+                <p><?php echo Gruenerator_Settings::get_dashboard_description(); ?></p>
+                <a href="<?php echo admin_url('admin.php?page=gruenerator-settings'); ?>" class="button button-primary">
+                    Einstellungen verwalten
+                </a>
+            </div>
+
             <div class="gruenerator-footer">
                 <h3>Hilfe & Support</h3>
                 <p>
@@ -233,16 +251,6 @@ function gruenerator_enqueue_admin_scripts($hook) {
         wp_enqueue_media();
         wp_enqueue_script('jquery');
         wp_enqueue_script('gruenerator-admin-js', GRUENERATOR_URL . 'admin/js/gruenerator-admin.js', array('jquery'), '1.0.0', true);
-        
-        // Lade das Setup-Wizard-Skript nur auf der Setup-Wizard-Seite
-        if (strpos($hook, 'gruenerator-setup-wizard') !== false) {
-            wp_enqueue_script('gruenerator-setup-wizard-js', 
-                plugin_dir_url(__FILE__) . 'admin/js/setup-wizard-script.js', 
-                array('jquery', 'wp-media-upload'), 
-                '1.0.0', 
-                true
-            );
-        }
     }
 }
 add_action('admin_enqueue_scripts', 'gruenerator_enqueue_admin_scripts');
@@ -255,5 +263,4 @@ function gruenerator_enqueue_admin_styles($hook) {
     wp_enqueue_style('gruenerator-admin-styles', GRUENERATOR_URL . 'build/index.css', array(), '1.0.0');
 }
 add_action('admin_enqueue_scripts', 'gruenerator_enqueue_admin_styles');
-
 ?>

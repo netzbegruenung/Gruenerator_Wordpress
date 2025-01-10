@@ -1,11 +1,5 @@
 <?php
-/**
- * Klasse für die Verwaltung der Plugin-Einstellungen
- *
- * @package Gruenerator
- * @since 1.0.0
- */
-
+// Verhindert direkten Zugriff auf die Datei
 if (!defined('ABSPATH')) {
     exit;
 }
@@ -14,36 +8,22 @@ if (!defined('ABSPATH')) {
  * Die Hauptklasse für die Plugin-Einstellungen
  */
 class Gruenerator_Settings {
-
     /**
      * Die einzige Instanz dieser Klasse
      *
-     * @since 1.0.0
-     * @access private
      * @var Gruenerator_Settings
      */
     private static $instance = null;
 
     /**
      * Konstruktor
-     *
-     * @since 1.0.0
-     * @access private
      */
-    private function __construct() {
-        add_action('admin_post_gruenerator_reset_settings', array($this, 'handle_reset_settings'));
-        add_action('admin_post_gruenerator_set_frontpage', array($this, 'handle_set_frontpage'));
-        add_action('admin_post_gruenerator_reset_frontpage', array($this, 'handle_reset_frontpage'));
-        add_action('admin_notices', array($this, 'show_admin_notices'));
-    }
+    private function __construct() {}
 
     /**
      * Gibt die einzige Instanz dieser Klasse zurück
      *
-     * @since 1.0.0
-     * @access public
-     *
-     * @return Gruenerator_Settings Die einzige Instanz dieser Klasse
+     * @return Gruenerator_Settings
      */
     public static function get_instance() {
         if (null === self::$instance) {
@@ -53,211 +33,544 @@ class Gruenerator_Settings {
     }
 
     /**
-     * Rendert die Einstellungsseite
+     * Gibt den Beschreibungstext für die Dashboard-Karte zurück
      *
-     * @since 1.0.0
-     * @access public
+     * @return string
      */
-    public function render_settings_page() {
-        if (!current_user_can('manage_options')) {
-            wp_die('Unzureichende Berechtigungen');
-        }
-
-        // Hole die aktuelle Startseiten-ID
-        $front_page_id = get_option('page_on_front');
-        $landing_page_id = get_option('gruenerator_landing_page_id');
-        $is_landing_page_front = ($front_page_id == $landing_page_id);
-        ?>
-        <div class="wrap">
-            <h1>Grünerator Einstellungen</h1>
-
-            <div class="gruenerator-settings-section">
-                <h2>Startseite</h2>
-                <div class="gruenerator-settings-card">
-                    <h3>Startseiten-Einstellung</h3>
-                    <?php if ($landing_page_id): ?>
-                        <?php if ($is_landing_page_front): ?>
-                            <p>Deine Grünerator Landing Page ist aktuell als Startseite festgelegt.</p>
-                            <form method="post" action="<?php echo esc_url(admin_url('admin-post.php')); ?>" onsubmit="return confirm('Möchtest du die Startseiten-Einstellung wirklich zurücksetzen? Die Standard-Blogansicht wird dann als Startseite verwendet.');">
-                                <?php wp_nonce_field('gruenerator_reset_frontpage_nonce'); ?>
-                                <input type="hidden" name="action" value="gruenerator_reset_frontpage">
-                                <input type="submit" class="button button-secondary" value="Startseiten-Einstellung zurücksetzen">
-                            </form>
-                        <?php else: ?>
-                            <p>Die Grünerator Landing Page ist aktuell nicht als Startseite festgelegt.</p>
-                            <form method="post" action="<?php echo esc_url(admin_url('admin-post.php')); ?>">
-                                <?php wp_nonce_field('gruenerator_set_frontpage_nonce'); ?>
-                                <input type="hidden" name="action" value="gruenerator_set_frontpage">
-                                <input type="submit" class="button button-primary" value="Als Startseite festlegen">
-                            </form>
-                        <?php endif; ?>
-                    <?php else: ?>
-                        <p>Es wurde noch keine Landing Page erstellt. Bitte durchlaufe zuerst den Setup-Assistenten.</p>
-                    <?php endif; ?>
-                </div>
-            </div>
-
-            <div class="gruenerator-settings-section">
-                <h2>Zurücksetzen</h2>
-                <p>Hier kannst du alle Einstellungen des Grünerators auf die Standardwerte zurücksetzen.</p>
-                
-                <div class="gruenerator-settings-card">
-                    <h3>Alle Einstellungen zurücksetzen</h3>
-                    <p>Diese Aktion setzt alle Einstellungen des Grünerators auf die Standardwerte zurück. Dies betrifft:</p>
-                    <ul>
-                        <li>Design-Einstellungen</li>
-                        <li>Social Media Verknüpfungen</li>
-                        <li>Hero-Bereich</li>
-                        <li>Über mich</li>
-                        <li>Hauptthema</li>
-                        <li>Politische Schwerpunkte</li>
-                        <li>Aktionsbereich</li>
-                        <li>Kontaktbereich</li>
-                    </ul>
-                    <p class="description">Achtung: Diese Aktion kann nicht rückgängig gemacht werden!</p>
-                    
-                    <form method="post" action="<?php echo esc_url(admin_url('admin-post.php')); ?>" onsubmit="return confirm('Bist du sicher, dass du alle Einstellungen zurücksetzen möchtest? Diese Aktion kann nicht rückgängig gemacht werden!');">
-                        <?php wp_nonce_field('gruenerator_reset_settings_nonce'); ?>
-                        <input type="hidden" name="action" value="gruenerator_reset_settings">
-                        <input type="submit" class="button button-secondary" value="Alle Einstellungen zurücksetzen">
-                    </form>
-                </div>
-            </div>
-        </div>
-        <?php
-    }
-
-    /**
-     * Verarbeitet das Zurücksetzen aller Einstellungen
-     *
-     * @since 1.0.0
-     * @access public
-     */
-    public function handle_reset_settings() {
-        if (!current_user_can('manage_options')) {
-            wp_die('Unzureichende Berechtigungen');
-        }
-
-        if (!isset($_POST['_wpnonce']) || !wp_verify_nonce($_POST['_wpnonce'], 'gruenerator_reset_settings_nonce')) {
-            wp_die('Sicherheitsüberprüfung fehlgeschlagen');
-        }
-
-        // Liste aller Optionen, die zurückgesetzt werden sollen
-        $options_to_reset = array(
-            'gruenerator_use_css',
-            'gruenerator_social_facebook',
-            'gruenerator_social_twitter',
-            'gruenerator_social_instagram',
-            'gruenerator_hero_image',
-            'gruenerator_hero_heading',
-            'gruenerator_hero_text',
-            'gruenerator_about_me_title',
-            'gruenerator_about_me_content',
-            'gruenerator_hero_image_block_image',
-            'gruenerator_hero_image_title',
-            'gruenerator_hero_image_subtitle',
-        );
-
-        // Füge die Themen-Optionen hinzu
-        for ($i = 1; $i <= 3; $i++) {
-            $options_to_reset[] = 'gruenerator_theme_image_' . $i;
-            $options_to_reset[] = 'gruenerator_theme_title_' . $i;
-            $options_to_reset[] = 'gruenerator_theme_content_' . $i;
-        }
-
-        // Füge die Aktions-Optionen hinzu
-        for ($i = 1; $i <= 3; $i++) {
-            $options_to_reset[] = 'gruenerator_action_image_' . $i;
-            $options_to_reset[] = 'gruenerator_action_text_' . $i;
-            $options_to_reset[] = 'gruenerator_action_link_' . $i;
-        }
-
-        // Füge die Kontaktformular-Optionen hinzu
-        $options_to_reset[] = 'gruenerator_contact_form_title';
-        $options_to_reset[] = 'gruenerator_contact_form_image';
-        $options_to_reset[] = 'gruenerator_contact_form_email';
-
-        // Lösche alle Optionen
-        foreach ($options_to_reset as $option) {
-            delete_option($option);
-        }
-
-        // Setze eine Erfolgsmeldung
-        add_settings_error(
-            'gruenerator_messages',
-            'gruenerator_reset_success',
-            'Alle Einstellungen wurden erfolgreich zurückgesetzt.',
-            'success'
-        );
-
-        // Leite zurück zur Einstellungsseite
-        wp_safe_redirect(add_query_arg(
-            array('page' => 'gruenerator-settings', 'settings-updated' => 'true'),
-            admin_url('admin.php')
-        ));
-        exit;
+    public static function get_dashboard_description() {
+        return __('Verwalte die Startseiten-Einstellung und setze bei Bedarf die Inhalte auf die Standardwerte zurück.', 'gruenerator');
     }
 
     /**
      * Setzt die Landing Page als Startseite
      *
-     * @since 1.0.0
-     * @access public
+     * @return bool|WP_Error
      */
-    public function handle_set_frontpage() {
+    public function set_frontpage() {
         if (!current_user_can('manage_options')) {
-            wp_die('Unzureichende Berechtigungen');
-        }
-
-        if (!isset($_POST['_wpnonce']) || !wp_verify_nonce($_POST['_wpnonce'], 'gruenerator_set_frontpage_nonce')) {
-            wp_die('Sicherheitsüberprüfung fehlgeschlagen');
+            return new WP_Error('insufficient_permissions', __('Unzureichende Berechtigungen', 'gruenerator'));
         }
 
         $landing_page_id = get_option('gruenerator_landing_page_id');
-        if ($landing_page_id) {
-            update_option('show_on_front', 'page');
-            update_option('page_on_front', $landing_page_id);
+        if (!$landing_page_id) {
+            return new WP_Error('no_landing_page', __('Keine Landing Page gefunden. Bitte durchlaufe zuerst den Setup-Assistenten.', 'gruenerator'));
         }
 
-        wp_safe_redirect(add_query_arg(
-            array('page' => 'gruenerator-settings', 'settings-updated' => 'true'),
-            admin_url('admin.php')
-        ));
-        exit;
+        // Überprüfe, ob die Seite existiert
+        $landing_page = get_post($landing_page_id);
+        if (!$landing_page || $landing_page->post_type !== 'page') {
+            return new WP_Error('invalid_landing_page', __('Die Landing Page existiert nicht mehr oder ist keine gültige Seite.', 'gruenerator'));
+        }
+
+        update_option('show_on_front', 'page');
+        update_option('page_on_front', $landing_page_id);
+        
+        add_settings_error(
+            'gruenerator_messages',
+            'gruenerator_message',
+            __('Die Landing Page wurde erfolgreich als Startseite festgelegt.', 'gruenerator'),
+            'updated'
+        );
+        
+        return true;
     }
 
     /**
-     * Setzt die Startseite zurück auf die Standard-Blogansicht
+     * Setzt die Startseite zurück
      *
-     * @since 1.0.0
-     * @access public
+     * @return bool|WP_Error
      */
-    public function handle_reset_frontpage() {
+    public function reset_frontpage() {
         if (!current_user_can('manage_options')) {
-            wp_die('Unzureichende Berechtigungen');
+            return new WP_Error('insufficient_permissions', __('Unzureichende Berechtigungen', 'gruenerator'));
         }
 
-        if (!isset($_POST['_wpnonce']) || !wp_verify_nonce($_POST['_wpnonce'], 'gruenerator_reset_frontpage_nonce')) {
-            wp_die('Sicherheitsüberprüfung fehlgeschlagen');
+        $landing_page_id = get_option('gruenerator_landing_page_id');
+        $current_front_page = get_option('page_on_front');
+
+        // Überprüfe, ob die Landing Page aktuell als Startseite festgelegt ist
+        if ($landing_page_id != $current_front_page) {
+            return new WP_Error('not_landing_page', __('Die Grünerator Landing Page ist aktuell nicht als Startseite festgelegt.', 'gruenerator'));
         }
 
         update_option('show_on_front', 'posts');
         delete_option('page_on_front');
-
-        wp_safe_redirect(add_query_arg(
-            array('page' => 'gruenerator-settings', 'settings-updated' => 'true'),
-            admin_url('admin.php')
-        ));
-        exit;
+        
+        add_settings_error(
+            'gruenerator_messages',
+            'gruenerator_message',
+            __('Die Startseiten-Einstellung wurde erfolgreich zurückgesetzt.', 'gruenerator'),
+            'updated'
+        );
+        
+        return true;
     }
 
     /**
-     * Zeigt Admin-Benachrichtigungen an
-     *
-     * @since 1.0.0
-     * @access public
+     * Setzt alle Inhalte auf die Standardwerte zurück
      */
-    public function show_admin_notices() {
-        settings_errors('gruenerator_messages');
+    public function reset_content_to_defaults() {
+        if (!current_user_can('manage_options')) {
+            return;
+        }
+
+        // Hero Content
+        $hero_content = Gruenerator_Default_Content::get_hero_content();
+        update_option('gruenerator_hero_image', '');
+        update_option('gruenerator_hero_heading', $hero_content['heading']);
+        update_option('gruenerator_hero_text', $hero_content['text']);
+
+        // About Content
+        $about_content = Gruenerator_Default_Content::get_about_content();
+        update_option('gruenerator_about_me_title', $about_content['title']);
+        update_option('gruenerator_about_me_content', $about_content['content']);
+
+        // Hero Image Block
+        $hero_image_content = Gruenerator_Default_Content::get_hero_image_content();
+        update_option('gruenerator_hero_image_block_image', '');
+        update_option('gruenerator_hero_image_block_title', $hero_image_content['title']);
+        update_option('gruenerator_hero_image_subtitle', $hero_image_content['subtitle']);
+
+        // Themes
+        $themes = Gruenerator_Default_Content::get_themes();
+        for ($i = 1; $i <= 3; $i++) {
+            $theme = isset($themes[$i - 1]) ? $themes[$i - 1] : array();
+            update_option('gruenerator_theme_image_' . $i, '');
+            update_option('gruenerator_theme_title_' . $i, isset($theme['title']) ? $theme['title'] : '');
+            update_option('gruenerator_theme_content_' . $i, isset($theme['content']) ? $theme['content'] : '');
+        }
+
+        // Actions
+        $actions = Gruenerator_Default_Content::get_actions();
+        for ($i = 1; $i <= 3; $i++) {
+            $action = isset($actions[$i - 1]) ? $actions[$i - 1] : array();
+            update_option('gruenerator_action_image_' . $i, '');
+            update_option('gruenerator_action_text_' . $i, isset($action['text']) ? $action['text'] : '');
+            update_option('gruenerator_action_link_' . $i, isset($action['link']) ? $action['link'] : '');
+        }
+
+        // Contact Form
+        $contact_form = Gruenerator_Default_Content::get_contact_form_content();
+        update_option('gruenerator_contact_form_title', $contact_form['title']);
+        update_option('gruenerator_contact_form_email', $contact_form['email']);
+        update_option('gruenerator_contact_form_image', '');
+
+        add_settings_error(
+            'gruenerator_messages',
+            'gruenerator_message',
+            __('Alle Inhalte wurden erfolgreich auf die Standardwerte zurückgesetzt.', 'gruenerator'),
+            'updated'
+        );
     }
-} 
+
+    /**
+     * Rendert die Settings-Seite
+     */
+    public function render_settings_page() {
+        if (!current_user_can('manage_options')) {
+            wp_die(__('Du hast nicht die erforderlichen Berechtigungen, um diese Seite anzuzeigen.', 'gruenerator'));
+        }
+
+        $front_page_id = get_option('page_on_front');
+        $landing_page_id = get_option('gruenerator_landing_page_id');
+        $is_landing_page_front = ($front_page_id == $landing_page_id);
+        $css_active = (bool)get_option('gruenerator_custom_css_active', false);
+        $expert_mode = (bool)get_option('gruenerator_expert_mode', false);
+        $hide_topbar = (bool)get_option('gruenerator_hide_topbar', false);
+        $header_color = get_option('gruenerator_header_color', 'original');
+        $navbar_color = get_option('gruenerator_navbar_color', 'sand');
+        $title_color = get_option('gruenerator_title_color', 'black');
+        $navbar_text_color = get_option('gruenerator_navbar_text_color', 'tanne');
+
+        ?>
+        <div class="wrap">
+            <h1><?php echo esc_html(get_admin_page_title()); ?></h1>
+            <?php settings_errors('gruenerator_messages'); ?>
+
+            <div class="gruenerator-settings-section">
+                <h2><?php _e('Startseiten-Einstellung', 'gruenerator'); ?></h2>
+                <p><?php _e('Hier kannst du festlegen, ob die Grünerator Landing Page als Startseite deiner Website angezeigt werden soll.', 'gruenerator'); ?></p>
+                
+                <form method="post" action="">
+                    <?php wp_nonce_field('gruenerator_frontpage_settings'); ?>
+                    <table class="form-table">
+                        <tr>
+                            <th scope="row">
+                                <label for="gruenerator_frontpage">
+                                    <?php _e('Startseite', 'gruenerator'); ?>
+                                </label>
+                            </th>
+                            <td>
+                                <?php if (!$landing_page_id): ?>
+                                    <p class="description"><?php _e('Es wurde noch keine Landing Page erstellt. Bitte durchlaufe zuerst den Setup-Assistenten.', 'gruenerator'); ?></p>
+                                <?php elseif ($is_landing_page_front): ?>
+                                    <p><?php _e('Die Grünerator Landing Page ist aktuell als Startseite festgelegt.', 'gruenerator'); ?></p>
+                                    <button type="submit" name="gruenerator_reset_frontpage" class="button button-secondary">
+                                        <?php _e('Startseiten-Einstellung zurücksetzen', 'gruenerator'); ?>
+                                    </button>
+                                <?php else: ?>
+                                    <p><?php _e('Die Grünerator Landing Page ist aktuell nicht als Startseite festgelegt.', 'gruenerator'); ?></p>
+                                    <button type="submit" name="gruenerator_set_frontpage" class="button button-primary">
+                                        <?php _e('Als Startseite festlegen', 'gruenerator'); ?>
+                                    </button>
+                                <?php endif; ?>
+                            </td>
+                        </tr>
+                    </table>
+                </form>
+            </div>
+
+            <div class="gruenerator-settings-section">
+                <h2><?php _e('Design-Einstellungen', 'gruenerator'); ?></h2>
+                <p><?php _e('Hier kannst du das Design deiner Website anpassen.', 'gruenerator'); ?></p>
+                
+                <form id="gruenerator-css-form">
+                    <?php wp_nonce_field('gruenerator_toggle_css', 'gruenerator_css_nonce'); ?>
+                    
+                    <table class="form-table">
+                        <tr id="standard-mode-settings">
+                            <th scope="row">Grünerator Design</th>
+                            <td>
+                                <div class="gruenerator-toggle-switch">
+                                    <label class="switch">
+                                        <input type="checkbox" name="toggle_css" id="toggle_css" value="1" <?php checked($css_active); ?>>
+                                        <span class="slider round"></span>
+                                    </label>
+                                    <span id="css-status"><?php echo $css_active ? 'Aktiviert' : 'Deaktiviert'; ?></span>
+                                </div>
+                                <p class="description">Aktiviere diese Option, um das optimierte Grüne Design zu verwenden.</p>
+                            </td>
+                        </tr>
+
+                        <tr class="expert-mode-settings">
+                            <th scope="row">Header-Farbe</th>
+                            <td>
+                                <select name="header_color" id="header_color">
+                                    <option value="original" <?php selected($header_color, 'original'); ?>>Original</option>
+                                    <option value="tanne" <?php selected($header_color, 'tanne'); ?>>Tannengrün</option>
+                                    <option value="white" <?php selected($header_color, 'white'); ?>>Weiß</option>
+                                </select>
+                                <p class="description">Wähle die Farbe für den Header deiner Website.</p>
+                            </td>
+                        </tr>
+
+                        <tr class="expert-mode-settings">
+                            <th scope="row">Navbar-Farbe</th>
+                            <td>
+                                <select name="navbar_color" id="navbar_color">
+                                    <option value="sand" <?php selected($navbar_color, 'sand'); ?>>Sand</option>
+                                    <option value="white" <?php selected($navbar_color, 'white'); ?>>Weiß</option>
+                                    <option value="tanne" <?php selected($navbar_color, 'tanne'); ?>>Tannengrün</option>
+                                </select>
+                                <p class="description">Wähle die Farbe für die Hauptnavigation deiner Website.</p>
+                            </td>
+                        </tr>
+
+                        <tr class="expert-mode-settings">
+                            <th scope="row">Navbar-Schriftfarbe</th>
+                            <td>
+                                <select name="navbar_text_color" id="navbar_text_color">
+                                    <option value="black" <?php selected($navbar_text_color, 'black'); ?>>Schwarz</option>
+                                    <option value="white" <?php selected($navbar_text_color, 'white'); ?>>Weiß</option>
+                                    <option value="sand" <?php selected($navbar_text_color, 'sand'); ?>>Sand</option>
+                                    <option value="tanne" <?php selected($navbar_text_color, 'tanne'); ?>>Tannengrün</option>
+                                </select>
+                                <p class="description">Wähle die Schriftfarbe für die Links in der Hauptnavigation.</p>
+                            </td>
+                        </tr>
+
+                        <tr class="expert-mode-settings">
+                            <th scope="row">Titel-Farbe</th>
+                            <td>
+                                <select name="title_color" id="title_color">
+                                    <option value="black" <?php selected($title_color, 'black'); ?>>Schwarz</option>
+                                    <option value="white" <?php selected($title_color, 'white'); ?>>Weiß</option>
+                                    <option value="sand" <?php selected($title_color, 'sand'); ?>>Sand</option>
+                                    <option value="tanne" <?php selected($title_color, 'tanne'); ?>>Tannengrün</option>
+                                </select>
+                                <p class="description">Wähle die Farbe für den Titel deiner Website.</p>
+                            </td>
+                        </tr>
+
+                        <tr class="expert-mode-settings">
+                            <th scope="row">Topbar ausblenden</th>
+                            <td>
+                                <div class="gruenerator-toggle-switch">
+                                    <label class="switch">
+                                        <input type="checkbox" name="hide_topbar" id="hide_topbar" value="1" <?php checked($hide_topbar); ?>>
+                                        <span class="slider round"></span>
+                                    </label>
+                                    <span id="topbar-status"><?php echo $hide_topbar ? 'Ausgeblendet' : 'Sichtbar'; ?></span>
+                                </div>
+                                <p class="description">Wähle, ob die obere Leiste (Topbar) angezeigt werden soll.</p>
+                            </td>
+                        </tr>
+                    </table>
+                </form>
+            </div>
+
+            <div class="gruenerator-settings-section">
+                <h2><?php _e('Inhalte zurücksetzen', 'gruenerator'); ?></h2>
+                <p><?php _e('Hier kannst du alle im Setup-Wizard eingegebenen Inhalte auf die Standardwerte zurücksetzen.', 'gruenerator'); ?></p>
+                
+                <form method="post" action="">
+                    <?php wp_nonce_field('gruenerator_reset_content'); ?>
+                    <table class="form-table">
+                        <tr>
+                            <th scope="row">
+                                <label for="gruenerator_reset_content">
+                                    <?php _e('Inhalte zurücksetzen', 'gruenerator'); ?>
+                                </label>
+                            </th>
+                            <td>
+                                <button type="submit" name="gruenerator_reset_content" id="gruenerator_reset_content" class="button button-secondary">
+                                    <?php _e('Auf Standardwerte zurücksetzen', 'gruenerator'); ?>
+                                </button>
+                                <p class="description">
+                                    <?php _e('ACHTUNG: Diese Aktion kann nicht rückgängig gemacht werden. Alle benutzerdefinierten Inhalte werden durch die Standardwerte ersetzt.', 'gruenerator'); ?>
+                                </p>
+                            </td>
+                        </tr>
+                    </table>
+                </form>
+            </div>
+
+            <div class="gruenerator-settings-section">
+                <h2><?php _e('Erweiterte Einstellungen', 'gruenerator'); ?></h2>
+                <p><?php _e('Diese Einstellungen sind für fortgeschrittene Benutzer gedacht.', 'gruenerator'); ?></p>
+                
+                <table class="form-table">
+                    <tr>
+                        <th scope="row">Expertenmodus</th>
+                        <td>
+                            <div class="gruenerator-toggle-switch">
+                                <label class="switch">
+                                    <input type="checkbox" name="expert_mode" id="expert_mode" value="1" <?php checked($expert_mode); ?>>
+                                    <span class="slider round"></span>
+                                </label>
+                                <span id="expert-status"><?php echo $expert_mode ? 'Aktiviert' : 'Deaktiviert'; ?></span>
+                            </div>
+                            <p class="description">Im Expertenmodus können einzelne Design-Elemente individuell angepasst werden.</p>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <style>
+        .switch {
+          position: relative;
+          display: inline-block;
+          width: 60px;
+          height: 34px;
+        }
+        .switch input {
+          opacity: 0;
+          width: 0;
+          height: 0;
+        }
+        .slider {
+          position: absolute;
+          cursor: pointer;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          background-color: #ccc;
+          transition: .4s;
+        }
+        .slider:before {
+          position: absolute;
+          content: "";
+          height: 26px;
+          width: 26px;
+          left: 4px;
+          bottom: 4px;
+          background-color: white;
+          transition: .4s;
+        }
+        input:checked + .slider {
+          background-color: #2196F3;
+        }
+        input:checked + .slider:before {
+          transform: translateX(26px);
+        }
+        .slider.round {
+          border-radius: 34px;
+        }
+        .slider.round:before {
+          border-radius: 50%;
+        }
+        </style>
+
+        <script>
+        jQuery(document).ready(function($) {
+            function updateVisibility() {
+                var expertMode = $('#expert_mode').is(':checked');
+                if (expertMode) {
+                    $('.expert-mode-settings').show();
+                    $('#standard-mode-settings').hide();
+                    $('#toggle_css').prop('checked', false);
+                } else {
+                    $('.expert-mode-settings').hide();
+                    $('#standard-mode-settings').show();
+                }
+            }
+
+            // Initial visibility
+            updateVisibility();
+
+            $('#expert_mode').on('change', function() {
+                var isChecked = $(this).is(':checked');
+                var nonce = $('#gruenerator_css_nonce').val();
+                
+                $.ajax({
+                    url: ajaxurl,
+                    type: 'POST',
+                    data: {
+                        action: 'gruenerator_toggle_expert_mode',
+                        expert_mode: isChecked ? 1 : 0,
+                        nonce: nonce
+                    },
+                    success: function(response) {
+                        if (response.success) {
+                            $('#expert-status').text(isChecked ? 'Aktiviert' : 'Deaktiviert');
+                            updateVisibility();
+                        } else {
+                            alert('Es gab einen Fehler beim Aktualisieren der Einstellung.');
+                            $('#expert_mode').prop('checked', !isChecked);
+                        }
+                    }
+                });
+            });
+
+            $('#hide_topbar').on('change', function() {
+                var isChecked = $(this).is(':checked');
+                var nonce = $('#gruenerator_css_nonce').val();
+                
+                $.ajax({
+                    url: ajaxurl,
+                    type: 'POST',
+                    data: {
+                        action: 'gruenerator_toggle_topbar',
+                        hide_topbar: isChecked ? 1 : 0,
+                        nonce: nonce
+                    },
+                    success: function(response) {
+                        if (response.success) {
+                            $('#topbar-status').text(isChecked ? 'Ausgeblendet' : 'Sichtbar');
+                        } else {
+                            alert('Es gab einen Fehler beim Aktualisieren der Einstellung.');
+                            $('#hide_topbar').prop('checked', !isChecked);
+                        }
+                    }
+                });
+            });
+
+            $('#toggle_css').on('change', function() {
+                var isChecked = $(this).is(':checked');
+                var nonce = $('#gruenerator_css_nonce').val();
+                
+                $.ajax({
+                    url: ajaxurl,
+                    type: 'POST',
+                    data: {
+                        action: 'gruenerator_toggle_css',
+                        toggle_css: isChecked ? 1 : 0,
+                        nonce: nonce
+                    },
+                    success: function(response) {
+                        if (response.success) {
+                            $('#css-status').text(isChecked ? 'Aktiviert' : 'Deaktiviert');
+                        } else {
+                            alert('Es gab einen Fehler beim Aktualisieren der Einstellung.');
+                            $('#toggle_css').prop('checked', !isChecked);
+                        }
+                    }
+                });
+            });
+
+            $('#header_color').on('change', function() {
+                var selectedColor = $(this).val();
+                var nonce = $('#gruenerator_css_nonce').val();
+                
+                $.ajax({
+                    url: ajaxurl,
+                    type: 'POST',
+                    data: {
+                        action: 'gruenerator_change_header_color',
+                        header_color: selectedColor,
+                        nonce: nonce
+                    },
+                    success: function(response) {
+                        if (!response.success) {
+                            alert('Es gab einen Fehler beim Aktualisieren der Header-Farbe.');
+                        }
+                    }
+                });
+            });
+
+            $('#navbar_color').on('change', function() {
+                var selectedColor = $(this).val();
+                var nonce = $('#gruenerator_css_nonce').val();
+                
+                $.ajax({
+                    url: ajaxurl,
+                    type: 'POST',
+                    data: {
+                        action: 'gruenerator_change_navbar_color',
+                        navbar_color: selectedColor,
+                        nonce: nonce
+                    },
+                    success: function(response) {
+                        if (!response.success) {
+                            alert('Es gab einen Fehler beim Aktualisieren der Navbar-Farbe.');
+                        }
+                    }
+                });
+            });
+
+            $('#title_color').on('change', function() {
+                var selectedColor = $(this).val();
+                var nonce = $('#gruenerator_css_nonce').val();
+                
+                $.ajax({
+                    url: ajaxurl,
+                    type: 'POST',
+                    data: {
+                        action: 'gruenerator_change_title_color',
+                        title_color: selectedColor,
+                        nonce: nonce
+                    },
+                    success: function(response) {
+                        if (!response.success) {
+                            alert('Es gab einen Fehler beim Aktualisieren der Titel-Farbe.');
+                        }
+                    }
+                });
+            });
+
+            $('#navbar_text_color').on('change', function() {
+                var selectedColor = $(this).val();
+                var nonce = $('#gruenerator_css_nonce').val();
+                
+                $.ajax({
+                    url: ajaxurl,
+                    type: 'POST',
+                    data: {
+                        action: 'gruenerator_change_navbar_text_color',
+                        navbar_text_color: selectedColor,
+                        nonce: nonce
+                    },
+                    success: function(response) {
+                        if (!response.success) {
+                            alert('Es gab einen Fehler beim Aktualisieren der Navbar-Schriftfarbe.');
+                        }
+                    }
+                });
+            });
+        });
+        </script>
+        <?php
+    }
+}

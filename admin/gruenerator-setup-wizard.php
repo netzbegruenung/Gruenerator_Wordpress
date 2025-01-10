@@ -67,15 +67,16 @@ function gruenerator_setup_wizard() {
 
     $steps = array(
         0 => 'Willkommen',
-        1 => 'CSS-Einstellungen',
-        2 => 'Soziale Netzwerke',
-        3 => 'Hero-Bereich',
-        4 => 'Über mich',
-        5 => 'Hero Image Block',
-        6 => 'Meine Themen',
-        7 => 'Bildergalerie',
-        8 => 'Kontaktformular',
-        9 => 'Abschluss'
+        1 => 'Inhaltsquelle',
+        2 => 'CSS-Einstellungen',
+        3 => 'Soziale Netzwerke',
+        4 => 'Hero-Bereich',
+        5 => 'Über mich',
+        6 => 'Hero Image Block',
+        7 => 'Meine Themen',
+        8 => 'Bildergalerie',
+        9 => 'Kontaktformular',
+        10 => 'Abschluss'
     );
 
     gruenerator_log("Anzeige des Setup-Wizard-Schritts: " . $current_step, 'info');
@@ -128,33 +129,36 @@ function gruenerator_display_step_content($current_step) {
             gruenerator_welcome_page();
             break;
         case 1:
-            gruenerator_css_settings();
+            gruenerator_content_source();
             break;
         case 2:
-            gruenerator_social_networks();
+            gruenerator_css_settings();
             break;
         case 3:
-            gruenerator_hero_section();
+            gruenerator_social_networks();
             break;
         case 4:
-            gruenerator_about_me();
+            gruenerator_hero_section();
             break;
         case 5:
-            gruenerator_hero_image_block();
+            gruenerator_about_me();
             break;
         case 6:
-            gruenerator_my_themes();
+            gruenerator_hero_image_block();
             break;
         case 7:
-            gruenerator_image_grid();
+            gruenerator_my_themes();
             break;
         case 8:
-            gruenerator_contact_form();
+            gruenerator_image_grid();
             break;
         case 9:
-            gruenerator_final_step();
+            gruenerator_contact_form();
             break;
         case 10:
+            gruenerator_final_step();
+            break;
+        case 11:
             gruenerator_setup_complete_page();
             break;
         default:
@@ -169,9 +173,9 @@ function gruenerator_display_navigation_buttons($current_step) {
         <?php if ($current_step > 0): ?>
             <a href="<?php echo esc_url(add_query_arg('step', $current_step - 1)); ?>" class="button button-secondary">Zurück</a>
         <?php endif; ?>
-        <?php if ($current_step < 9): ?>
+        <?php if ($current_step < 10): ?>
             <input type="submit" name="gruenerator_setup_submit" class="button button-primary" value="Weiter">
-        <?php elseif ($current_step == 9): ?>
+        <?php elseif ($current_step == 10): ?>
             <input type="submit" name="gruenerator_setup_submit" class="button button-primary" value="Abschließen">
         <?php else: ?>
             <a href="<?php echo admin_url('admin.php?page=gruenerator-generator'); ?>" class="button button-primary">Zum Dashboard</a>
@@ -205,10 +209,10 @@ function gruenerator_process_setup() {
     }
 
     $next_step = $current_step + 1;
-    if ($next_step > 9) {
+    if ($next_step > 10) {
         gruenerator_setup_complete();
         gruenerator_log("Setup abgeschlossen. Weiterleitung zur finalen Seite.", 'info');
-        wp_safe_redirect(add_query_arg('step', 10, admin_url('admin.php?page=gruenerator-setup-wizard')));
+        wp_safe_redirect(add_query_arg('step', 11, admin_url('admin.php?page=gruenerator-setup-wizard')));
         exit;
     } else {
         gruenerator_log("Weiterleitung zum nächsten Schritt: " . $next_step, 'info');
@@ -278,6 +282,7 @@ function gruenerator_enqueue_setup_wizard_styles($hook) {
         return;
     }
     
+    wp_enqueue_media();
     wp_enqueue_style('gruenerator-setup-wizard-styles', GRUENERATOR_URL . 'admin/css/setup-wizard-styles.css', array(), '1.0.0');
     wp_enqueue_script('gruenerator-setup-wizard-script', GRUENERATOR_URL . 'admin/js/setup-wizard-script.js', array('jquery'), '1.0.0', true);
 }
