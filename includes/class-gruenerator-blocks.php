@@ -504,12 +504,6 @@ function gruenerator_render_contact_form_block($attributes, $content) {
     }
 }
 
-function gruenerator_enqueue_icon_styles() {
-    wp_enqueue_style('font-awesome', 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css');
-    wp_enqueue_style('fork-awesome', 'https://cdn.jsdelivr.net/npm/fork-awesome@1.1.7/css/fork-awesome.min.css');
-}
-add_action('wp_enqueue_scripts', 'gruenerator_enqueue_icon_styles');
-
 // Sunflower Contact Form Block Registration
 function gruenerator_register_sunflower_contact_form_block() {
     if (function_exists('register_block_type') && !WP_Block_Type_Registry::get_instance()->is_registered('sunflower/contact-form')) {
