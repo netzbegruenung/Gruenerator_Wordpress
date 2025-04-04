@@ -108,15 +108,15 @@ function gruenerator_register_all_blocks() {
             'attributes' => array(
                 'heroImageUrl' => array(
                     'type' => 'string',
-                    'default' => Gruenerator_Default_Content::get_hero_content()['image'],
+                    'default' => Gruenerator_Default_Content::get_hero_content()['image'] ?? '',
                 ),
                 'heroHeading' => array(
                     'type' => 'string',
-                    'default' => Gruenerator_Default_Content::get_hero_content()['heading'],
+                    'default' => Gruenerator_Default_Content::get_hero_content()['heading'] ?? '',
                 ),
                 'heroText' => array(
                     'type' => 'string',
-                    'default' => Gruenerator_Default_Content::get_hero_content()['text'],
+                    'default' => Gruenerator_Default_Content::get_hero_content()['text'] ?? '',
                 ),
             ),
         ),
@@ -125,11 +125,11 @@ function gruenerator_register_all_blocks() {
             'attributes' => array(
                 'title' => array(
                     'type' => 'string',
-                    'default' => Gruenerator_Default_Content::get_about_content()['title'],
+                    'default' => Gruenerator_Default_Content::get_about_content()['title'] ?? '',
                 ),
                 'content' => array(
                     'type' => 'string',
-                    'default' => Gruenerator_Default_Content::get_about_content()['content'],
+                    'default' => Gruenerator_Default_Content::get_about_content()['content'] ?? '',
                 ),
             ),
         ),
@@ -142,15 +142,15 @@ function gruenerator_register_all_blocks() {
                 ),
                 'backgroundImageUrl' => array(
                     'type' => 'string',
-                    'default' => Gruenerator_Default_Content::get_hero_image_content()['image'],
+                    'default' => Gruenerator_Default_Content::get_hero_image_content()['image'] ?? '',
                 ),
                 'title' => array(
                     'type' => 'string',
-                    'default' => Gruenerator_Default_Content::get_hero_image_content()['title'],
+                    'default' => Gruenerator_Default_Content::get_hero_image_content()['title'] ?? '',
                 ),
                 'subtitle' => array(
                     'type' => 'string',
-                    'default' => Gruenerator_Default_Content::get_hero_image_content()['subtitle'],
+                    'default' => Gruenerator_Default_Content::get_hero_image_content()['subtitle'] ?? '',
                 ),
             ),
         ),
@@ -210,11 +210,11 @@ function gruenerator_register_all_blocks() {
                 ),
                 'title' => array(
                     'type' => 'string',
-                    'default' => Gruenerator_Default_Content::get_contact_form_content()['title'],
+                    'default' => Gruenerator_Default_Content::get_contact_form_content()['title'] ?? '',
                 ),
                 'email' => array(
                     'type' => 'string',
-                    'default' => Gruenerator_Default_Content::get_contact_form_content()['email'],
+                    'default' => Gruenerator_Default_Content::get_contact_form_content()['email'] ?? '',
                 ),
                 'socialMedia' => array(
                     'type' => 'array',
@@ -273,9 +273,9 @@ function gruenerator_render_hero_block($attributes, $content) {
         error_log('Rendering hero block: ' . print_r($attributes, true));
 
         $default_content = Gruenerator_Default_Content::get_hero_content();
-        $hero_image_url = !empty($attributes['heroImageUrl']) ? $attributes['heroImageUrl'] : $default_content['image'];
-        $hero_heading = !empty($attributes['heroHeading']) ? $attributes['heroHeading'] : $default_content['heading'];
-        $hero_text = !empty($attributes['heroText']) ? $attributes['heroText'] : $default_content['text'];
+        $hero_image_url = !empty($attributes['heroImageUrl']) ? $attributes['heroImageUrl'] : $default_content['image'] ?? '';
+        $hero_heading = !empty($attributes['heroHeading']) ? $attributes['heroHeading'] : $default_content['heading'] ?? '';
+        $hero_text = !empty($attributes['heroText']) ? $attributes['heroText'] : $default_content['text'] ?? '';
 
         ob_start();
         ?>
@@ -362,9 +362,9 @@ function gruenerator_render_hero_image_block($attributes, $content) {
         error_log('Rendering hero image block: ' . print_r($attributes, true));
 
         $default_content = Gruenerator_Default_Content::get_hero_image_content();
-        $background_image_url = !empty($attributes['backgroundImageUrl']) ? $attributes['backgroundImageUrl'] : $default_content['image'];
-        $title = !empty($attributes['title']) ? $attributes['title'] : $default_content['title'];
-        $subtitle = !empty($attributes['subtitle']) ? $attributes['subtitle'] : $default_content['subtitle'];
+        $background_image_url = !empty($attributes['backgroundImageUrl']) ? $attributes['backgroundImageUrl'] : $default_content['image'] ?? '';
+        $title = !empty($attributes['title']) ? $attributes['title'] : $default_content['title'] ?? '';
+        $subtitle = !empty($attributes['subtitle']) ? $attributes['subtitle'] : $default_content['subtitle'] ?? '';
         $align_class = isset($attributes['align']) ? ' align' . $attributes['align'] : ' alignfull';
 
         ob_start();
@@ -486,7 +486,7 @@ function gruenerator_render_contact_form_block($attributes, $content) {
                         <h2 class="contact-form-title"><?php echo esc_html($title); ?></h2>
                         <?php if ($email): ?>
                             <div class="contact-info">
-                                <p><?php echo esc_html($default_content['description']); ?></p>
+                                <p><?php echo esc_html($default_content['description'] ?? ''); ?></p>
                             </div>
                         <?php endif; ?>
                     </div>
@@ -503,12 +503,6 @@ function gruenerator_render_contact_form_block($attributes, $content) {
         return '';
     }
 }
-
-function gruenerator_enqueue_icon_styles() {
-    wp_enqueue_style('font-awesome', 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css');
-    wp_enqueue_style('fork-awesome', 'https://cdn.jsdelivr.net/npm/fork-awesome@1.1.7/css/fork-awesome.min.css');
-}
-add_action('wp_enqueue_scripts', 'gruenerator_enqueue_icon_styles');
 
 // Sunflower Contact Form Block Registration
 function gruenerator_register_sunflower_contact_form_block() {
